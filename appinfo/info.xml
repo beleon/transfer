@@ -20,7 +20,7 @@
     <bugs>https://github.com/cociweb/nextcloud-transfer/issues</bugs>
     <screenshot small-thumbnail="https://raw.githubusercontent.com/cociweb/transfer/master/img/prompt.png">https://raw.githubusercontent.com/cociweb/transfer/master/img/prompt.png</screenshot>
     <dependencies>
-        <nextcloud min-version="28" max-version="31"/>
+        <nextcloud min-version="28" max-version="32"/>
     </dependencies>
     <activity>
         <settings>
