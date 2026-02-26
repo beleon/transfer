@@ -19,7 +19,7 @@
     <bugs>https://github.com/danth/transfer/issues</bugs>
     <screenshot small-thumbnail="https://raw.githubusercontent.com/danth/transfer/master/img/prompt.png">https://raw.githubusercontent.com/danth/transfer/master/img/prompt.png</screenshot>
     <dependencies>
-        <nextcloud min-version="28" max-version="28"/>
+        <nextcloud min-version="28" max-version="32"/>
     </dependencies>
     <activity>
         <settings>
