@@ -1,29 +1,14 @@
-.PHONY: npm-install
-npm-install:
-	npm install
-
-.PHONY: npm-build
-npm-build: npm-install
-	npm run build
-
-.PHONY: icon
-icon: npm-install
-	sed 's/path/path fill="#fff"/g' \
-		<node_modules/@mdi/svg/svg/cloud-upload.svg \
-		>img/app.svg
-	sed 's/path/path fill="#000"/g' \
-		<node_modules/@mdi/svg/svg/cloud-upload.svg \
-		>img/app-dark.svg
+NODE_IMAGE ?= docker.io/library/node:20
 
 .PHONY: build
-build: npm-build icon
+build:
+	podman run --rm -v .:/app:z -w /app $(NODE_IMAGE) sh -c "npm ci && npm run build"
 
 .PHONY: dist
 dist: build
 	rm -f transfer.tar.gz
-	tar \
-		--transform 's|^\.|transfer|' \
-		-cvzf transfer.tar.gz \
+	bsdtar -czf transfer.tar.gz \
+		-s ",^\./,transfer/," \
 		./appinfo \
 		./COPYING \
 		./img \
@@ -31,3 +16,7 @@ dist: build
 		./lib \
 		./l10n \
 		./README.md
+
+.PHONY: clean
+clean:
+	rm -rf node_modules js transfer.tar.gz

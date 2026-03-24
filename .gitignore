@@ -129,12 +129,9 @@ dist
 .yarn/install-state.gz
 .pnp.*
 
-# Webpack output
+# Build output
 js
 
-# Generated app icons
-img/app.svg
-img/app-dark.svg
 
 # Appstore tarball builds
 transfer.tar.gz
