@@ -1,44 +1,61 @@
-# Nextcloud Transfer app
+<p align="center">
+  <picture>
+    <source media="(prefers-color-scheme: dark)" srcset="img/app.svg">
+    <source media="(prefers-color-scheme: light)" srcset="img/app-dark.svg">
+    <img src="img/app-dark.svg" width="64" height="64" alt="Transfer">
+  </picture>
+</p>
 
-"Upload by link" functionality for Nextcloud. Transfer files using the full
-bandwidth available to your server. Avoid the need to leave your own device
-online to finish an upload.
+<h1 align="center">Nextcloud Transfer</h1>
 
-## Usage instructions
+<p align="center">
+  <strong>Upload by link</strong> — transfer files into Nextcloud from any URL,<br>
+  using the full bandwidth available to your server.
+</p>
 
-Select "Upload by link" from the new file menu.
+<p align="center">
+  <a href="https://apps.nextcloud.com/apps/transfer"><img src="https://img.shields.io/badge/Nextcloud-29–33-0082c9?logo=nextcloud&logoColor=white" alt="Nextcloud 29–33"></a>
+  <a href="https://github.com/beleon/transfer/releases/latest"><img src="https://img.shields.io/github/v/release/beleon/transfer?color=2ea44f" alt="Latest release"></a>
+  <a href="COPYING"><img src="https://img.shields.io/badge/license-AGPL--3.0-blue" alt="AGPL-3.0"></a>
+  <a href="https://www.transifex.com/nextcloud/nextcloud/"><img src="https://img.shields.io/badge/translations-Transifex-9cf" alt="Translate on Transifex"></a>
+</p>
+
+---
+
+## How it works
+
+Select **Upload by link** from the **+** menu in your files view.
 
 ![Menu at the top of the files page.](img/menu.png)
 
-A prompt will appear for you to paste the link. The file name and extension are
-detected automatically when possible, but can be changed.
+Paste a URL and the filename and extension will be detected automatically.
+You can optionally provide a checksum to verify the download.
 
 ![The prompt appears in the middle of the screen.](img/prompt.png)
 
-Once you click "Upload", the transfer will be queued to run in the background.
+Click **Upload** and the transfer is queued as a background job. You'll get
+activity notifications when it starts, completes, or fails.
 
-Queued jobs should start within five minutes. If you want to reduce this delay,
-configure your server to trigger `cron.php` more often.
+> [!TIP]
+> Queued jobs run on the server's cron schedule — typically within five minutes.
+> Configure your server to trigger `cron.php` more often to speed things up.
 
-## Development information
+## Building
 
-### Translations
+You can build with a local toolchain or entirely in a container.
 
-You can help to translate the app by joining the
+**With podman** (no local Node.js needed):
+
+    make build
+
+**With a local toolchain** (requires Node.js 20+ and npm):
+
+    npm ci && npm run build
+
+Either way the output lands in `js/` and `css/`.
+To create a release archive: `make dist`
+
+## Translations
+
+Help translate the app by joining the
 [Nextcloud team on Transifex](https://www.transifex.com/nextcloud/nextcloud/).
-
-### Building the app
-
-The app can be built using the provided Makefile by running `make`.
-This requires the following programs to be installed:
-
-* `make`
-* `tar`: for building the archive
-* `npm`: for building the JavaScript bundle
-
-### Publishing
-
-1. Run `make dist`
-2. Upload to GitHub releases
-3. Sign the file using `openssl dgst -sha512 -sign /path/to/signing.key /path/to/app.tar.gz | openssl base64`
-4. Paste download link and signature into the [App Store](http://apps.nextcloud.com/)
