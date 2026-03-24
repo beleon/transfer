@@ -9,7 +9,7 @@
                 using the full bandwidth available to your server. Avoid the need to
                 leave your own device online to finish an upload.]]>
 	</description>
-	<version>0.6.4</version>
+	<version>0.7.0</version>
 	<licence>agpl</licence>
 	<author mail="danthwaites30@btinternet.com" homepage="https://danth.me">Daniel Thwaites</author>
 	<author>Leon Becker</author>
@@ -18,7 +18,7 @@
 	<category>tools</category>
 	<website>https://github.com/beleon/transfer#readme</website>
 	<bugs>https://github.com/beleon/transfer/issues</bugs>
-	<screenshot small-thumbnail="https://raw.githubusercontent.com/beleon/transfer/master/app/img/prompt.png">https://raw.githubusercontent.com/beleon/transfer/master/app/img/prompt.png</screenshot>
+	<screenshot small-thumbnail="https://raw.githubusercontent.com/beleon/transfer/master/img/prompt.png">https://raw.githubusercontent.com/beleon/transfer/master/img/prompt.png</screenshot>
 	<dependencies>
 		<nextcloud min-version="29" max-version="33"/>
 	</dependencies>
