@@ -1,39 +1,40 @@
 <?xml version="1.0"?>
-<info xmlns:xsi= "http://www.w3.org/2001/XMLSchema-instance"
-      xsi:noNamespaceSchemaLocation="https://apps.nextcloud.com/schema/apps/info.xsd">
-    <id>transfer</id>
-    <name>Transfer</name>
-    <summary>Add a file to Nextcloud from a web link.</summary>
-    <description>
-        <![CDATA["Upload by link" functionality for Nextcloud. Transfer files
-            using the full bandwidth available to your server. Avoid the need to
-            leave your own device online to finish an upload.]]>
-    </description>
-    <version>0.6.3</version>
-    <licence>agpl</licence>
-    <author mail="danthwaites30@btinternet.com" homepage="https://danth.me">Daniel Thwaites</author>
-    <namespace>Transfer</namespace>
-    <category>files</category>
-    <category>tools</category>
-    <website>https://github.com/danth/transfer#readme</website>
-    <bugs>https://github.com/danth/transfer/issues</bugs>
-    <screenshot small-thumbnail="https://raw.githubusercontent.com/danth/transfer/master/img/prompt.png">https://raw.githubusercontent.com/danth/transfer/master/img/prompt.png</screenshot>
-    <dependencies>
-        <nextcloud min-version="28" max-version="28"/>
-    </dependencies>
-    <activity>
-        <settings>
-            <setting>OCA\Transfer\Activity\Settings\TransferStartedSetting</setting>
-            <setting>OCA\Transfer\Activity\Settings\TransferFailedSetting</setting>
-            <setting>OCA\Transfer\Activity\Settings\TransferSucceededSetting</setting>
-        </settings>
-        <filters>
-            <filter>OCA\Transfer\Activity\Filter</filter>
-        </filters>
-        <providers>
-            <provider>OCA\Transfer\Activity\Providers\TransferStartedProvider</provider>
-            <provider>OCA\Transfer\Activity\Providers\TransferFailedProvider</provider>
-            <provider>OCA\Transfer\Activity\Providers\TransferSucceededProvider</provider>
-        </providers>
-    </activity>
+<info xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	  xsi:noNamespaceSchemaLocation="https://apps.nextcloud.com/schema/apps/info.xsd">
+	<id>transfer</id>
+	<name>Transfer</name>
+	<summary>Add a file to Nextcloud from a web link.</summary>
+	<description>
+	    <![CDATA["Upload by link" functionality for Nextcloud. Transfer files
+                using the full bandwidth available to your server. Avoid the need to
+                leave your own device online to finish an upload.]]>
+	</description>
+	<version>0.6.4</version>
+	<licence>agpl</licence>
+	<author mail="danthwaites30@btinternet.com" homepage="https://danth.me">Daniel Thwaites</author>
+	<author>Leon Becker</author>
+	<namespace>Transfer</namespace>
+	<category>files</category>
+	<category>tools</category>
+	<website>https://github.com/beleon/transfer#readme</website>
+	<bugs>https://github.com/beleon/transfer/issues</bugs>
+	<screenshot small-thumbnail="https://raw.githubusercontent.com/beleon/transfer/master/app/img/prompt.png">https://raw.githubusercontent.com/beleon/transfer/master/app/img/prompt.png</screenshot>
+	<dependencies>
+		<nextcloud min-version="29" max-version="33"/>
+	</dependencies>
+	<activity>
+		<settings>
+			<setting>OCA\Transfer\Activity\Settings\TransferStartedSetting</setting>
+			<setting>OCA\Transfer\Activity\Settings\TransferFailedSetting</setting>
+			<setting>OCA\Transfer\Activity\Settings\TransferSucceededSetting</setting>
+		</settings>
+		<filters>
+			<filter>OCA\Transfer\Activity\Filter</filter>
+		</filters>
+		<providers>
+			<provider>OCA\Transfer\Activity\Providers\TransferStartedProvider</provider>
+			<provider>OCA\Transfer\Activity\Providers\TransferFailedProvider</provider>
+			<provider>OCA\Transfer\Activity\Providers\TransferSucceededProvider</provider>
+		</providers>
+	</activity>
 </info>
