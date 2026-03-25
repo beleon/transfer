@@ -11,20 +11,24 @@ use OCP\Files\IRootFolder;
 use OCP\Files\NotFoundException;
 use OCP\Http\Client\IClientService;
 use OCP\Http\Client\LocalServerException;
+use OCP\ITempManager;
 
 class TransferService {
 	protected $activityManager;
 	protected $clientService;
 	protected $rootFolder;
+	protected $tempManager;
 
 	public function __construct(
 		IManager $activityManager,
 		IClientService $clientService,
-		IRootFolder $rootFolder
+		IRootFolder $rootFolder,
+		ITempManager $tempManager
 	) {
 		$this->activityManager = $activityManager;
 		$this->clientService = $clientService;
 		$this->rootFolder = $rootFolder;
+		$this->tempManager = $tempManager;
 	}
 
 	/**
@@ -35,7 +39,7 @@ class TransferService {
 
 		$this->generateStartedEvent($userId, $path, $url);
 
-		$tmpPath = tempnam(sys_get_temp_dir(), "nextcloud-transfer-");
+		$tmpPath = $this->tempManager->getTemporaryFile();
 
 		$client = $this->clientService->newClient();
 
