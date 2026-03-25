@@ -74,11 +74,6 @@ const STYLES = `
 	width: 10em;
 	flex-shrink: 0;
 }
-.transfer-dot {
-	font-size: 1.2em;
-	font-weight: 600;
-	padding-bottom: 8px;
-}
 .transfer-note {
 	background: var(--note-background, var(--color-background-dark, #ededed));
 	border-radius: var(--border-radius-large, 10px);
@@ -138,7 +133,7 @@ function injectStyles() {
 }
 
 /**
- * Parse a URL into a name and extension.
+ * Parse a filename from a URL path.
  */
 function parseFilename(url) {
 	try {
@@ -146,12 +141,31 @@ function parseFilename(url) {
 		const basename = decodeURIComponent(pathname.split('/').filter(Boolean).pop() || '')
 		const dot = basename.lastIndexOf('.')
 		if (dot > 0) {
-			return { name: basename.substring(0, dot), extension: basename.substring(dot + 1) }
+			return { filename: basename, hasExtension: true }
 		}
-		return { name: basename || '', extension: '' }
+		return { filename: basename || '', hasExtension: false }
 	} catch {
-		return { name: '', extension: '' }
+		return { filename: '', hasExtension: false }
 	}
+}
+
+/**
+ * Probe a URL server-side to detect the file extension from Content-Type.
+ */
+let probeTimer = null
+function probeExtension(url, callback) {
+	clearTimeout(probeTimer)
+	probeTimer = setTimeout(async () => {
+		try {
+			const resp = await axios.get(
+				generateFilePath('transfer', 'ajax', 'probe.php'),
+				{ params: { url } },
+			)
+			callback(resp.data.extension || '')
+		} catch {
+			callback('')
+		}
+	}, 500)
 }
 
 /**
@@ -176,16 +190,9 @@ function showDialog(currentPath) {
 					<input id="transfer-url" type="url" placeholder="https://example.com/file.txt" />
 				</div>
 
-				<div class="transfer-field transfer-field--row">
-					<div class="transfer-field transfer-field--grow">
-						<label for="transfer-name">${t('transfer', 'File name')}</label>
-						<input id="transfer-name" type="text" />
-					</div>
-					<span class="transfer-dot">.</span>
-					<div class="transfer-field transfer-field--ext">
-						<label for="transfer-ext">${t('transfer', 'Extension')}</label>
-						<input id="transfer-ext" type="text" />
-					</div>
+				<div class="transfer-field">
+					<label for="transfer-filename">${t('transfer', 'File name')}</label>
+					<input id="transfer-filename" type="text" />
 				</div>
 
 				<div class="transfer-note">
@@ -223,38 +230,55 @@ function showDialog(currentPath) {
 		document.body.appendChild(overlay)
 
 		const urlInput = dialog.querySelector('#transfer-url')
-		const nameInput = dialog.querySelector('#transfer-name')
-		const extInput = dialog.querySelector('#transfer-ext')
+		const filenameInput = dialog.querySelector('#transfer-filename')
 		const hashAlgoSelect = dialog.querySelector('#transfer-hashalgo')
 		const hashInput = dialog.querySelector('#transfer-hash')
 		const submitBtn = dialog.querySelector('#transfer-submit')
 		const cancelBtn = dialog.querySelector('#transfer-cancel')
 
-		let nameEdited = false
-		let extEdited = false
+		let filenameEdited = false
+		let probedExtension = ''
 
 		function updateDefaults() {
-			const defaults = parseFilename(urlInput.value)
-			if (!nameEdited) nameInput.placeholder = defaults.name || t('transfer', 'File name')
-			if (!extEdited) extInput.placeholder = defaults.extension || t('transfer', 'Extension')
+			const parsed = parseFilename(urlInput.value)
+			if (!filenameEdited) {
+				if (parsed.hasExtension) {
+					filenameInput.placeholder = parsed.filename
+				} else if (parsed.filename) {
+					// No extension in URL — probe the server
+					filenameInput.placeholder = parsed.filename
+					probeExtension(urlInput.value, (ext) => {
+						probedExtension = ext
+						if (!filenameEdited && ext) {
+							filenameInput.placeholder = parsed.filename + '.' + ext
+						}
+					})
+				} else {
+					filenameInput.placeholder = t('transfer', 'File name')
+				}
+			}
 			updateValidity()
 		}
 
+		function getFilename() {
+			if (filenameInput.value) return filenameInput.value
+			const parsed = parseFilename(urlInput.value)
+			if (parsed.hasExtension) return parsed.filename
+			if (parsed.filename && probedExtension) return parsed.filename + '.' + probedExtension
+			return parsed.filename
+		}
+
 		function updateValidity() {
-			const defaults = parseFilename(urlInput.value)
-			const name = nameInput.value || defaults.name
-			const ext = extInput.value || defaults.extension
 			let validUrl = false
 			try {
 				new URL(urlInput.value)
 				validUrl = true
 			} catch { /* invalid */ }
-			submitBtn.disabled = !(validUrl && name && ext)
+			submitBtn.disabled = !(validUrl && getFilename())
 		}
 
 		urlInput.addEventListener('input', updateDefaults)
-		nameInput.addEventListener('input', () => { nameEdited = nameInput.value !== ''; updateValidity() })
-		extInput.addEventListener('input', () => { extEdited = extInput.value !== ''; updateValidity() })
+		filenameInput.addEventListener('input', () => { filenameEdited = filenameInput.value !== ''; updateValidity() })
 
 		function close() {
 			overlay.remove()
@@ -273,11 +297,8 @@ function showDialog(currentPath) {
 		document.addEventListener('keydown', onKey)
 
 		async function submit() {
-			const defaults = parseFilename(urlInput.value)
-			const name = nameInput.value || defaults.name
-			const ext = extInput.value || defaults.extension
-			const fullName = name + '.' + ext
-			const path = currentPath.replace(/\/$/, '') + '/' + fullName
+			const filename = getFilename()
+			const path = currentPath.replace(/\/$/, '') + '/' + filename
 
 			submitBtn.disabled = true
 			cancelBtn.disabled = true
