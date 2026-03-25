@@ -69,6 +69,10 @@ class TransferController extends Controller {
 	 * @NoAdminRequired
 	 */
 	public function transfer(string $path, string $url, string $hashAlgo, string $hash) {
+		if (basename($path) === '') {
+			return new DataResponse('File name is required', Http::STATUS_BAD_REQUEST);
+		}
+
 		$this->jobList->add(TransferJob::class, [
 			"userId" => $this->userId,
 			"path" => $path,
