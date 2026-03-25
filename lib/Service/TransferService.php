@@ -8,6 +8,7 @@ use OCA\Transfer\Activity\Providers\TransferSucceededProvider;
 use GuzzleHttp\Exception\BadResponseException;
 use OCP\Activity\IManager;
 use OCP\Files\IRootFolder;
+use OCP\Files\NotFoundException;
 use OCP\Http\Client\IClientService;
 use OCP\Http\Client\LocalServerException;
 
@@ -51,12 +52,22 @@ class TransferService {
 		if ($hash == "" || hash_file($hashAlgo, $tmpPath) == $hash) {
 			$dirPath = dirname($path);
 			$filename = basename($path);
-			$dir = $userFolder->get($dirPath);
+
+			try {
+				$dir = $userFolder->get($dirPath);
+			} catch (NotFoundException $e) {
+				unlink($tmpPath);
+				$this->generateFailedEvent($userId, $path, $url);
+				return false;
+			}
+
+			$filename = $dir->getNonExistingName($filename);
 			$file = $dir->newFile($filename);
 			$file->putContent(fopen($tmpPath, 'r'));
 			unlink($tmpPath);
 
-			$this->generateSucceededEvent($userId, $path, $url, $file->getId());
+			$actualPath = $dirPath . '/' . $filename;
+			$this->generateSucceededEvent($userId, $actualPath, $url, $file->getId());
 			return true;
 		} else {
 			unlink($tmpPath);
