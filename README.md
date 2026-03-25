@@ -40,6 +40,14 @@ activity notifications when it starts, completes, or fails.
 > Queued jobs run on the server's cron schedule — typically within five minutes.
 > Configure your server to trigger `cron.php` more often to speed things up.
 
+## Security
+
+This app lets users trigger server-side HTTP requests (SSRF by design), which
+carries inherent risk. Nextcloud's built-in protection blocks requests to local
+and internal network addresses. Admins should be aware that transfers run with
+the requesting user's file write permissions (no size or bandwidth limits yet)
+and that the source URL is logged in activity events (visible to the user).
+
 ## Building
 
 You can build with a local toolchain or entirely in a container.
