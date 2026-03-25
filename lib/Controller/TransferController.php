@@ -73,6 +73,10 @@ class TransferController extends Controller {
 			return new DataResponse('File name is required', Http::STATUS_BAD_REQUEST);
 		}
 
+		if ($hashAlgo !== '' && !in_array($hashAlgo, ['md5', 'sha1', 'sha256', 'sha512'], true)) {
+			return new DataResponse('Unsupported hash algorithm', Http::STATUS_BAD_REQUEST);
+		}
+
 		$this->jobList->add(TransferJob::class, [
 			"userId" => $this->userId,
 			"path" => $path,
