@@ -6,29 +6,31 @@ use OCA\Transfer\Activity\Providers\TransferStartedProvider;
 use OCA\Transfer\Activity\Providers\TransferSucceededProvider;
 
 use GuzzleHttp\Exception\BadResponseException;
-use OC\Files\Filesystem;
 use OCP\Activity\IManager;
+use OCP\Files\IRootFolder;
 use OCP\Http\Client\IClientService;
 use OCP\Http\Client\LocalServerException;
 
 class TransferService {
 	protected $activityManager;
 	protected $clientService;
+	protected $rootFolder;
 
 	public function __construct(
 		IManager $activityManager,
-		IClientService $clientService
+		IClientService $clientService,
+		IRootFolder $rootFolder
 	) {
 		$this->activityManager = $activityManager;
 		$this->clientService = $clientService;
+		$this->rootFolder = $rootFolder;
 	}
 
 	/**
 	 * @return Whether the transfer succeeded.
 	 */
 	public function transfer(string $userId, string $path, string $url, string $hashAlgo, string $hash) {
-		\OC_Util::tearDownFS();
-		\OC_Util::setupFS($userId);
+		$userFolder = $this->rootFolder->getUserFolder($userId);
 
 		$this->generateStartedEvent($userId, $path, $url);
 
@@ -39,20 +41,22 @@ class TransferService {
 		try {
 			$response = $client->get($url, ["sink" => $tmpPath, "timeout" => 0]);
 		} catch (BadResponseException $exception) {
-			// The HTTP request had an unsuccessful response code.
 			$this->generateFailedEvent($userId, $path, $url);
 			return false;
 		} catch (LocalServerException $exception) {
-			// The user tried to access `localhost` or similar.
 			$this->generateBlockedEvent($userId, $path, $url);
 			return false;
 		}
 
 		if ($hash == "" || hash_file($hashAlgo, $tmpPath) == $hash) {
-			Filesystem::file_put_contents($path, fopen($tmpPath, 'r'));
+			$dirPath = dirname($path);
+			$filename = basename($path);
+			$dir = $userFolder->get($dirPath);
+			$file = $dir->newFile($filename);
+			$file->putContent(fopen($tmpPath, 'r'));
 			unlink($tmpPath);
 
-			$this->generateSucceededEvent($userId, $path, $url);
+			$this->generateSucceededEvent($userId, $path, $url, $file->getId());
 			return true;
 		} else {
 			unlink($tmpPath);
@@ -98,13 +102,13 @@ class TransferService {
 		$this->activityManager->publish($event);
 	}
 
-	protected function generateSucceededEvent(string $userId, string $path, string $url) {
+	protected function generateSucceededEvent(string $userId, string $path, string $url, int $fileId) {
 		$event = $this->activityManager->generateEvent();
 		$event->setApp("transfer");
 		$event->setType(TransferSucceededProvider::TYPE_TRANSFER_SUCCEEDED);
 		$event->setAffectedUser($userId);
 		$event->setSubject(TransferSucceededProvider::SUBJECT_TRANSFER_SUCCEEDED, ["url" => $url]);
-		$event->setObject("files", Filesystem::getFileInfo($path)->getId(), $path);
+		$event->setObject("files", $fileId, $path);
 		$this->activityManager->publish($event);
 	}
 }
