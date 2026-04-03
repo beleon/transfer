@@ -17,7 +17,6 @@
   <a href="https://apps.nextcloud.com/apps/transfer"><img src="https://img.shields.io/badge/Nextcloud-29–33-0082c9?logo=nextcloud&logoColor=white" alt="Nextcloud 29–33"></a>
   <a href="https://github.com/beleon/transfer/releases/latest"><img src="https://img.shields.io/github/v/release/beleon/transfer?color=2ea44f" alt="Latest release"></a>
   <a href="COPYING"><img src="https://img.shields.io/badge/license-AGPL--3.0-blue" alt="AGPL-3.0"></a>
-  <a href="https://www.transifex.com/nextcloud/nextcloud/"><img src="https://img.shields.io/badge/translations-Transifex-9cf" alt="Translate on Transifex"></a>
 </p>
 
 ---
@@ -63,7 +62,8 @@ You can build with a local toolchain or entirely in a container.
 Either way the output lands in `js/` and `css/`.
 To create a release archive: `make dist`
 
-## Translations
+## Contributing
 
-Help translate the app by joining the
-[Nextcloud team on Transifex](https://www.transifex.com/nextcloud/nextcloud/).
+Contributions are welcome. Please open an issue or pull request on
+[GitHub](https://github.com/beleon/transfer). All contributions are
+licensed under the [AGPL-3.0](COPYING).
