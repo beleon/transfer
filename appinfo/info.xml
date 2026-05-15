@@ -22,6 +22,10 @@
 	<dependencies>
 		<nextcloud min-version="29" max-version="33"/>
 	</dependencies>
+	<settings>
+		<personal-section>OCA\Transfer\Settings\TransferSection</personal-section>
+		<personal>OCA\Transfer\Settings\PersonalSettings</personal>
+	</settings>
 	<activity>
 		<settings>
 			<setting>OCA\Transfer\Activity\Settings\TransferStartedSetting</setting>

@@ -15,6 +15,7 @@ dist: build
 		./js \
 		./lib \
 		./l10n \
+		./templates \
 		./README.md
 
 .PHONY: clean
