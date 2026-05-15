@@ -10,6 +10,8 @@ use OCP\Files\IRootFolder;
 use OCP\Files\NotFoundException;
 use OCP\Http\Client\IClientService;
 use OCP\Http\Client\LocalServerException;
+use OCP\ICacheFactory;
+use OCP\IConfig;
 use OCP\ITempManager;
 
 class TransferService {
@@ -17,17 +19,27 @@ class TransferService {
 	protected $clientService;
 	protected $rootFolder;
 	protected $tempManager;
+	protected $cacheFactory;
+	protected $config;
 
 	public function __construct(
 		IManager $activityManager,
 		IClientService $clientService,
 		IRootFolder $rootFolder,
-		ITempManager $tempManager
+		ITempManager $tempManager,
+		ICacheFactory $cacheFactory,
+		IConfig $config
 	) {
 		$this->activityManager = $activityManager;
 		$this->clientService = $clientService;
 		$this->rootFolder = $rootFolder;
 		$this->tempManager = $tempManager;
+		$this->cacheFactory = $cacheFactory;
+		$this->config = $config;
+	}
+
+	public function isProgressAvailable(): bool {
+		return $this->config->getSystemValue('memcache.distributed', '') !== '';
 	}
 
 	/**
@@ -41,11 +53,69 @@ class TransferService {
 		$tmpPath = $this->tempManager->getTemporaryFile();
 
 		$client = $this->clientService->newClient();
+		$cache = $this->isProgressAvailable() ? $this->cacheFactory->createDistributed('transfer') : null;
+		$lastUpdate = 0;
+		$cancelled = false;
+
+		// Register this transfer in the user's index
+		if ($cache) {
+			$index = json_decode($cache->get('index:' . $userId) ?: '[]', true);
+			$index[] = $transferId;
+			$cache->set('index:' . $userId, json_encode($index), 3600);
+		}
 
 		try {
-			$response = $client->get($url, ["sink" => $tmpPath, "timeout" => 0, "read_timeout" => 120]);
+			$options = ["sink" => $tmpPath, "timeout" => 0, "read_timeout" => 120];
+			if ($cache) {
+				// Use raw curl progress function — returning non-zero aborts the transfer
+				$options["curl"] = [
+					CURLOPT_NOPROGRESS => false,
+					CURLOPT_PROGRESSFUNCTION => function ($resource, $downloadTotal, $downloaded, $uploadTotal, $uploaded) use ($cache, $transferId, $path, $url, &$lastUpdate, &$cancelled) {
+						$now = time();
+						if ($now - $lastUpdate < 2) {
+							return 0;
+						}
+						$lastUpdate = $now;
+
+						// Check for explicit cancellation
+						$shouldCancel = (bool)$cache->get('cancel:' . $transferId);
+
+						// Check heartbeat (only exists for immediate transfers)
+						if (!$shouldCancel) {
+							$heartbeat = $cache->get('heartbeat:' . $transferId);
+							if ($heartbeat !== null && ($now - (int)$heartbeat) > 10) {
+								$shouldCancel = true;
+							}
+						}
+
+						if ($shouldCancel) {
+							$cancelled = true;
+							$cache->remove('cancel:' . $transferId);
+							$cache->remove('progress:' . $transferId);
+							return 1; // Abort curl
+						}
+
+						$cache->set('progress:' . $transferId, json_encode([
+							"id" => $transferId,
+							"filename" => basename($path),
+							"url" => $url,
+							"total" => $downloadTotal,
+							"downloaded" => $downloaded,
+							"updated" => $now,
+						]), 3600);
+
+						return 0;
+					},
+				];
+			}
+			$response = $client->get($url, $options);
 		} catch (\Exception $exception) {
+			if ($cache) $this->removeTransfer($cache, $userId, $transferId);
 			@unlink($tmpPath);
+			if ($cancelled) {
+				$this->generateFailedEvent($userId, $path, $url);
+				return false;
+			}
 			if ($exception instanceof LocalServerException) {
 				$this->generateBlockedEvent($userId, $path, $url);
 			} else {
@@ -53,6 +123,8 @@ class TransferService {
 			}
 			return false;
 		}
+
+		if ($cache) $this->removeTransfer($cache, $userId, $transferId);
 
 		if ($hash == "" || hash_file($hashAlgo, $tmpPath) == $hash) {
 			$dirPath = dirname($path);
@@ -66,6 +138,7 @@ class TransferService {
 				return false;
 			}
 
+			// Retry loop in case of concurrent writes with the same filename
 			for ($attempt = 0; $attempt < 5; $attempt++) {
 				try {
 					$uniqueName = $dir->getNonExistingName($filename);
@@ -78,7 +151,7 @@ class TransferService {
 						$this->generateFailedEvent($userId, $path, $url);
 						return false;
 					}
-					usleep(100000);
+					usleep(100000); // 100ms before retry
 				}
 			}
 			unlink($tmpPath);
@@ -91,6 +164,20 @@ class TransferService {
 
 			$this->generateHashFailedEvent($userId, $path, $url);
 			return false;
+		}
+	}
+
+	protected function removeTransfer($cache, string $userId, string $transferId) {
+		$cache->remove('progress:' . $transferId);
+		$cache->remove('heartbeat:' . $transferId);
+		$index = json_decode($cache->get('index:' . $userId) ?: '[]', true);
+		$index = array_values(array_filter($index, function ($id) use ($transferId) {
+			return $id !== $transferId;
+		}));
+		if (empty($index)) {
+			$cache->remove('index:' . $userId);
+		} else {
+			$cache->set('index:' . $userId, json_encode($index), 3600);
 		}
 	}
 

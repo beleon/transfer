@@ -10,6 +10,16 @@ return [
 	    'name' => 'transfer#probe',
 	    'url' => 'ajax/probe.php',
 	    'verb' => 'GET'
+	],
+	[
+	    'name' => 'transfer#progress',
+	    'url' => 'ajax/progress.php',
+	    'verb' => 'GET'
+	],
+	[
+	    'name' => 'transfer#cancel',
+	    'url' => 'ajax/cancel.php',
+	    'verb' => 'POST'
 	]
     ]
 ];

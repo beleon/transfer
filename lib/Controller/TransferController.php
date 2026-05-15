@@ -4,6 +4,7 @@ namespace OCA\Transfer\Controller;
 use OCP\BackgroundJob\IJobList;
 use OCP\Http\Client\IClientService;
 use OCP\Http\Client\LocalServerException;
+use OCP\ICacheFactory;
 use OCP\IRequest;
 use OCP\AppFramework\Controller;
 use OCP\AppFramework\Http;
@@ -16,6 +17,8 @@ class TransferController extends Controller {
 	private $userId;
 	private $jobList;
 	private $clientService;
+	private $cacheFactory;
+	private $service;
 
 	private const MIME_EXTENSIONS = [
 		'image/jpeg' => 'jpg',
@@ -55,6 +58,7 @@ class TransferController extends Controller {
 		IRequest $request,
 		IJobList $jobList,
 		IClientService $clientService,
+		ICacheFactory $cacheFactory,
 		TransferService $service,
 		$UserId
 	) {
@@ -62,6 +66,7 @@ class TransferController extends Controller {
 		$this->userId = $UserId;
 		$this->jobList = $jobList;
 		$this->clientService = $clientService;
+		$this->cacheFactory = $cacheFactory;
 		$this->service = $service;
 	}
 
@@ -111,5 +116,56 @@ class TransferController extends Controller {
 		} catch (\Exception $e) {
 			return new DataResponse(['extension' => ''], Http::STATUS_OK);
 		}
+	}
+
+	/**
+	 * Get progress of active transfers for the current user.
+	 *
+	 * @NoAdminRequired
+	 * @NoCSRFRequired
+	 */
+	public function progress(string $heartbeat = '') {
+		if (!$this->service->isProgressAvailable()) {
+			return new DataResponse(['error' => 'no_cache', 'message' => 'Progress tracking requires a distributed cache (Redis or Memcached).'], Http::STATUS_OK);
+		}
+		$cache = $this->cacheFactory->createDistributed('transfer');
+		$index = json_decode($cache->get('index:' . $this->userId) ?: '[]', true);
+
+		// Update heartbeat for the specified transfer (validate ownership)
+		if ($heartbeat !== '') {
+			if (in_array($heartbeat, $index, true)) {
+				$cache->set('heartbeat:' . $heartbeat, time(), 30);
+			}
+		}
+
+		$transfers = [];
+		foreach ($index as $transferId) {
+			$data = $cache->get('progress:' . $transferId);
+			if ($data !== null) {
+				$transfers[] = json_decode($data, true);
+			}
+		}
+		return new DataResponse($transfers, Http::STATUS_OK);
+	}
+
+	/**
+	 * Cancel an active transfer.
+	 *
+	 * @NoAdminRequired
+	 */
+	public function cancel(string $transferId) {
+		if (!$this->service->isProgressAvailable()) {
+			return new DataResponse(false, Http::STATUS_BAD_REQUEST);
+		}
+		$cache = $this->cacheFactory->createDistributed('transfer');
+
+		// Validate the transfer belongs to the current user
+		$index = json_decode($cache->get('index:' . $this->userId) ?: '[]', true);
+		if (!in_array($transferId, $index, true)) {
+			return new DataResponse(false, Http::STATUS_NOT_FOUND);
+		}
+
+		$cache->set('cancel:' . $transferId, '1', 300);
+		return new DataResponse(true, Http::STATUS_OK);
 	}
 }
