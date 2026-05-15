@@ -5,7 +5,6 @@ use OCA\Transfer\Activity\Providers\TransferFailedProvider;
 use OCA\Transfer\Activity\Providers\TransferStartedProvider;
 use OCA\Transfer\Activity\Providers\TransferSucceededProvider;
 
-use GuzzleHttp\Exception\BadResponseException;
 use OCP\Activity\IManager;
 use OCP\Files\IRootFolder;
 use OCP\Files\NotFoundException;
@@ -34,7 +33,7 @@ class TransferService {
 	/**
 	 * @return Whether the transfer succeeded.
 	 */
-	public function transfer(string $userId, string $path, string $url, string $hashAlgo, string $hash) {
+	public function transfer(string $userId, string $path, string $url, string $hashAlgo, string $hash, string $transferId) {
 		$userFolder = $this->rootFolder->getUserFolder($userId);
 
 		$this->generateStartedEvent($userId, $path, $url);
@@ -44,12 +43,14 @@ class TransferService {
 		$client = $this->clientService->newClient();
 
 		try {
-			$response = $client->get($url, ["sink" => $tmpPath, "timeout" => 0]);
-		} catch (BadResponseException $exception) {
-			$this->generateFailedEvent($userId, $path, $url);
-			return false;
-		} catch (LocalServerException $exception) {
-			$this->generateBlockedEvent($userId, $path, $url);
+			$response = $client->get($url, ["sink" => $tmpPath, "timeout" => 0, "read_timeout" => 120]);
+		} catch (\Exception $exception) {
+			@unlink($tmpPath);
+			if ($exception instanceof LocalServerException) {
+				$this->generateBlockedEvent($userId, $path, $url);
+			} else {
+				$this->generateFailedEvent($userId, $path, $url);
+			}
 			return false;
 		}
 
@@ -65,12 +66,24 @@ class TransferService {
 				return false;
 			}
 
-			$filename = $dir->getNonExistingName($filename);
-			$file = $dir->newFile($filename);
-			$file->putContent(fopen($tmpPath, 'r'));
+			for ($attempt = 0; $attempt < 5; $attempt++) {
+				try {
+					$uniqueName = $dir->getNonExistingName($filename);
+					$file = $dir->newFile($uniqueName);
+					$file->putContent(fopen($tmpPath, 'r'));
+					break;
+				} catch (\Exception $e) {
+					if ($attempt === 4) {
+						unlink($tmpPath);
+						$this->generateFailedEvent($userId, $path, $url);
+						return false;
+					}
+					usleep(100000);
+				}
+			}
 			unlink($tmpPath);
 
-			$actualPath = $dirPath . '/' . $filename;
+			$actualPath = $dirPath . '/' . $uniqueName;
 			$this->generateSucceededEvent($userId, $actualPath, $url, $file->getId());
 			return true;
 		} else {

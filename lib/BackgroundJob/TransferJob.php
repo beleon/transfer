@@ -20,7 +20,8 @@ class TransferJob extends QueuedJob {
 			$arguments["path"],
 			$arguments["url"],
 			$arguments["hashAlgo"],
-			$arguments["hash"]
+			$arguments["hash"],
+			$arguments["transferId"]
 		);
 	}
 }

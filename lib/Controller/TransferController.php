@@ -77,12 +77,15 @@ class TransferController extends Controller {
 			return new DataResponse('Unsupported hash algorithm', Http::STATUS_BAD_REQUEST);
 		}
 
+		$transferId = uniqid('t', true);
+
 		$this->jobList->add(TransferJob::class, [
 			"userId" => $this->userId,
 			"path" => $path,
 			"url" => $url,
 			"hashAlgo" => $hashAlgo,
 			"hash" => $hash,
+			"transferId" => $transferId,
 		]);
 
 		return new DataResponse(true, Http::STATUS_OK);
