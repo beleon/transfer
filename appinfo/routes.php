@@ -12,6 +12,16 @@ return [
 	    'verb' => 'GET'
 	],
 	[
+	    'name' => 'transfer#prepare',
+	    'url' => 'ajax/prepare.php',
+	    'verb' => 'POST'
+	],
+	[
+	    'name' => 'transfer#start',
+	    'url' => 'ajax/start.php',
+	    'verb' => 'POST'
+	],
+	[
 	    'name' => 'transfer#progress',
 	    'url' => 'ajax/progress.php',
 	    'verb' => 'GET'

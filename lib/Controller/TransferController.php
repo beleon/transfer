@@ -97,6 +97,72 @@ class TransferController extends Controller {
 	}
 
 	/**
+	 * Prepare an immediate transfer. Stores the parameters and returns the ID.
+	 *
+	 * @NoAdminRequired
+	 */
+	public function prepare(string $path, string $url, string $hashAlgo, string $hash) {
+		if (!$this->service->isProgressAvailable()) {
+			return new DataResponse('Immediate transfers require a distributed cache (Redis or Memcached).', Http::STATUS_BAD_REQUEST);
+		}
+
+		if (basename($path) === '') {
+			return new DataResponse('File name is required', Http::STATUS_BAD_REQUEST);
+		}
+
+		if ($hashAlgo !== '' && !in_array($hashAlgo, ['md5', 'sha1', 'sha256', 'sha512'], true)) {
+			return new DataResponse('Unsupported hash algorithm', Http::STATUS_BAD_REQUEST);
+		}
+
+		$transferId = uniqid('t', true);
+
+		$cache = $this->cacheFactory->createDistributed('transfer');
+		$cache->set('prepared:' . $transferId, json_encode([
+			"userId" => $this->userId,
+			"path" => $path,
+			"url" => $url,
+			"hashAlgo" => $hashAlgo,
+			"hash" => $hash,
+		]), 300);
+		$cache->set('heartbeat:' . $transferId, time(), 30);
+
+		return new DataResponse(['transferId' => $transferId], Http::STATUS_OK);
+	}
+
+	/**
+	 * Start a prepared immediate transfer. Blocks until complete.
+	 *
+	 * @NoAdminRequired
+	 */
+	public function start(string $transferId) {
+		set_time_limit(0);
+
+		if (!$this->service->isProgressAvailable()) {
+			return new DataResponse('Immediate transfers require a distributed cache (Redis or Memcached).', Http::STATUS_BAD_REQUEST);
+		}
+
+		$cache = $this->cacheFactory->createDistributed('transfer');
+		$data = $cache->get('prepared:' . $transferId);
+
+		if ($data === null) {
+			return new DataResponse('Transfer not found or expired', Http::STATUS_NOT_FOUND);
+		}
+
+		$params = json_decode($data, true);
+		$cache->remove('prepared:' . $transferId);
+
+		if ($params['userId'] !== $this->userId) {
+			return new DataResponse('Unauthorized', Http::STATUS_FORBIDDEN);
+		}
+
+		$success = $this->service->transfer(
+			$params['userId'], $params['path'], $params['url'],
+			$params['hashAlgo'], $params['hash'], $transferId
+		);
+		return new DataResponse($success, $success ? Http::STATUS_OK : Http::STATUS_INTERNAL_SERVER_ERROR);
+	}
+
+	/**
 	 * Probe a URL via HEAD request to determine the file extension.
 	 *
 	 * @NoAdminRequired
