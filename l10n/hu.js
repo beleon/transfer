@@ -7,8 +7,9 @@ OC.L10N.register(
     "Add a file to Nextcloud from a web link." : "Fájl hozzáadása a Nextcloudhoz webes hivatkozással",
     "Link" : "Hivatkozás",
     "File name" : "Fájlnév",
-    "Extension" : "Kiterjesztés",
+    "Algorithm" : "Algoritmus",
     "Checksum" : "Ellenőrzőösszeg",
+    "Cancel" : "Mégse",
     "Upload" : "Feltöltés"
 },
 "nplurals=2; plural=(n != 1);");

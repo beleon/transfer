@@ -4,8 +4,8 @@
     "Transfer" : "Overdragen",
     "Link" : "Link",
     "File name" : "Bestandsnaam",
-    "Extension" : "Extensie",
     "Checksum" : "Controlesom",
+    "Cancel" : "Annuleer",
     "Upload" : "Upload"
 },"pluralForm" :"nplurals=2; plural=(n != 1);"
 }

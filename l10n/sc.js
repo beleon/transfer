@@ -5,7 +5,7 @@ OC.L10N.register(
     "Transfer" : "Tràmuda",
     "Link" : "Ligòngiu",
     "File name" : "Nùmene de archìviu",
-    "Extension" : "Estensione",
+    "Cancel" : "Cancel",
     "Upload" : "Càrriga"
 },
 "nplurals=2; plural=(n != 1);");

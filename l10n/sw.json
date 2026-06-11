@@ -1,0 +1,11 @@
+{ "translations": {
+    "Files" : "Faili",
+    "Transfer" : "Hamisha",
+    "Link" : "Kiungio",
+    "File name" : "Jina la faili",
+    "Algorithm" : "Algorithm",
+    "Checksum" : "Hundi",
+    "Cancel" : "Ghairi",
+    "Upload" : "Pakia"
+},"pluralForm" :"nplurals=2; plural=(n != 1);"
+}

@@ -1,8 +1,10 @@
 OC.L10N.register(
     "transfer",
     {
-    "Files" : "Files",
-    "Link" : "Link",
-    "Upload" : "Upload"
+    "Files" : "Fayllar",
+    "Link" : "Havola",
+    "Checksum" : "Tekshirish summasi",
+    "Cancel" : "Bekor qilish",
+    "Upload" : "Yuklash"
 },
 "nplurals=1; plural=0;");

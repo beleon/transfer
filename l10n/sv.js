@@ -5,8 +5,9 @@ OC.L10N.register(
     "Transfer" : "Överför",
     "Link" : "Länk",
     "File name" : "Filnamn",
-    "Extension" : "Tillägg",
+    "Algorithm" : "Algoritm",
     "Checksum" : "Checksumma",
+    "Cancel" : "Avbryt",
     "Upload" : "Ladda upp"
 },
 "nplurals=2; plural=(n != 1);");

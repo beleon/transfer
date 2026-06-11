@@ -6,8 +6,8 @@ OC.L10N.register(
     "Transfer" : "Overdragen",
     "Link" : "Link",
     "File name" : "Bestandsnaam",
-    "Extension" : "Extensie",
     "Checksum" : "Controlesom",
+    "Cancel" : "Annuleer",
     "Upload" : "Upload"
 },
 "nplurals=2; plural=(n != 1);");

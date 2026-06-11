@@ -1,6 +1,8 @@
 { "translations": {
-    "Files" : "Files",
-    "Link" : "Link",
-    "Upload" : "Upload"
+    "Files" : "Fayllar",
+    "Link" : "Havola",
+    "Checksum" : "Tekshirish summasi",
+    "Cancel" : "Bekor qilish",
+    "Upload" : "Yuklash"
 },"pluralForm" :"nplurals=1; plural=0;"
 }

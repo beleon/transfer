@@ -1,7 +1,11 @@
 { "translations": {
     "Files" : "Failid",
+    "Transfer" : "Anna omand üle.",
     "Link" : "Link",
+    "File name" : "Failinimi",
+    "Algorithm" : "Algoritm",
     "Checksum" : "Kontrollsumma",
+    "Cancel" : "Katkesta",
     "Upload" : "Laadi üles"
 },"pluralForm" :"nplurals=2; plural=(n != 1);"
 }

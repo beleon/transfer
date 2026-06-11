@@ -8,12 +8,13 @@ OC.L10N.register(
     "Saved from {url}" : "Sauvegardé depuis {url}",
     "{url} was saved to {file}" : "{url} a été sauvegardé dans {file}",
     "Files" : "Fichiers",
-    "Transfer" : "Transfert",
+    "Transfer" : "Transférer",
     "Add a file to Nextcloud from a web link." : "Ajouter un fichier à Nextcloud à partir d'un lien web.",
     "Link" : "Lien",
     "File name" : "Nom du fichier",
-    "Extension" : "Extension",
+    "Algorithm" : "Algorithme",
     "Checksum" : "Somme de contrôle",
+    "Cancel" : "Annuler",
     "Upload" : "Téléverser"
 },
 "nplurals=3; plural=(n == 0 || n == 1) ? 0 : n != 0 && n % 1000000 == 0 ? 1 : 2;");

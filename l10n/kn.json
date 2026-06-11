@@ -1,6 +1,7 @@
 { "translations": {
-    "Files" : "ಕಡತಗಳು",
+    "Files" : "﻿ಕಡತಗಳು",
     "Link" : "ಸಂಪರ್ಕ ಕೊಂಡಿ",
+    "Cancel" : "Cancel",
     "Upload" : "ವರ್ಗಾಯಿಸಿ"
 },"pluralForm" :"nplurals=2; plural=(n > 1);"
 }

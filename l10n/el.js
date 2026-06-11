@@ -1,14 +1,8 @@
 OC.L10N.register(
     "transfer",
     {
-    "Transfer of {url} failed" : "Η μεταφορά του {url} απέτυχε",
-    "Files" : "Αρχεία",
-    "Transfer" : "Μεταφορά",
-    "Add a file to Nextcloud from a web link." : "Προσθήκη αρχείου στο NextCloud από έναν διαδικτυακό σύνδεσμο.",
     "Link" : "Σύνδεσμος",
     "File name" : "Όνομα αρχείου",
-    "Extension" : "Επέκταση",
-    "Checksum" : "Άθροισμα ελέγχου",
-    "Upload" : "Μεταφόρτωση"
+    "Cancel" : "Ακύρωση"
 },
 "nplurals=2; plural=(n != 1);");

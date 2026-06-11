@@ -1,26 +1,14 @@
 { "translations": {
     "Upload by link" : "Upload by link",
-    "Transfer of {url} failed" : "Transfer of {url} failed",
-    "Transfer of {url} failed because its checksum did not match" : "Transfer of {url} failed because its checksum did not match",
     "Transfer of {url} was blocked because it uses a restricted address" : "Transfer of {url} was blocked because it uses a restricted address",
-    "Transfer of {url} started" : "Transfer of {url} started",
     "Saved from {url}" : "Saved from {url}",
     "{url} was saved to {file}" : "{url} was saved to {file}",
-    "An upload by link was unsuccessful" : "An upload by link was unsuccessful",
     "Files" : "Files",
-    "An upload by link is being processed" : "An upload by link is being processed",
     "An upload by link was successful" : "An upload by link was successful",
-    "Transfer" : "Transfer",
-    "Add a file to Nextcloud from a web link." : "Add a file to Nextcloud from a web link.",
-    "\"Upload by link\" functionality for Nextcloud. Transfer files\n            using the full bandwidth available to your server. Avoid the need to\n            leave your own device online to finish an upload." : "\"Upload by link\" functionality for Nextcloud. Transfer files\n            using the full bandwidth available to your server. Avoid the need to\n            leave your own device online to finish an upload.",
     "Link" : "Link",
     "File name" : "File name",
-    "Extension" : "Extension",
-    "Some websites provide a checksum in addition to the file. This is used after the transfer to verify that the file is not corrupted." : "Some websites provide a checksum in addition to the file. This is used after the transfer to verify that the file is not corrupted.",
-    "Checksum" : "Checksum",
-    "Upload" : "Upload",
-    "The upload is queued and will begin processing soon." : "The upload is queued and will begin processing soon.",
-    "Failed to add the upload to the queue. The server responded with status code {statusCode}." : "Failed to add the upload to the queue. The server responded with status code {statusCode}.",
+    "Algorithm" : "Algorithm",
+    "Cancel" : "Cancel",
     "Failed to add the upload to the queue." : "Failed to add the upload to the queue."
 },"pluralForm" :"nplurals=2; plural=(n != 1);"
 }

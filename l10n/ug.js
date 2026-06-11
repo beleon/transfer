@@ -2,6 +2,12 @@ OC.L10N.register(
     "transfer",
     {
     "Files" : "ھۆججەتلەر",
-    "Upload" : "يۈكلە"
+    "Transfer" : "يۆتكەش",
+    "Link" : "ئۇلىنىش",
+    "File name" : "ھۆججەت ئىسمى",
+    "Algorithm" : "ئالگورىزىم",
+    "Checksum" : "تەكشۈرۈش يىغىندىسى",
+    "Cancel" : "ۋاز كەچ",
+    "Upload" : "يۈكلەش"
 },
 "nplurals=2; plural=(n != 1);");

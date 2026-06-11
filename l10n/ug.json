@@ -1,5 +1,11 @@
 { "translations": {
     "Files" : "ھۆججەتلەر",
-    "Upload" : "يۈكلە"
+    "Transfer" : "يۆتكەش",
+    "Link" : "ئۇلىنىش",
+    "File name" : "ھۆججەت ئىسمى",
+    "Algorithm" : "ئالگورىزىم",
+    "Checksum" : "تەكشۈرۈش يىغىندىسى",
+    "Cancel" : "ۋاز كەچ",
+    "Upload" : "يۈكلەش"
 },"pluralForm" :"nplurals=2; plural=(n != 1);"
 }

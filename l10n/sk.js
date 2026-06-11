@@ -7,8 +7,8 @@ OC.L10N.register(
     "Add a file to Nextcloud from a web link." : "Pridajte do Nextcloudu súbor z webového odkazu.",
     "Link" : "Prepojenie",
     "File name" : "Názov súboru",
-    "Extension" : "Prípona",
     "Checksum" : "Kontrolný súčet",
+    "Cancel" : "Zrušiť",
     "Upload" : "Nahrať"
 },
 "nplurals=4; plural=(n % 1 == 0 && n == 1 ? 0 : n % 1 == 0 && n >= 2 && n <= 4 ? 1 : n % 1 != 0 ? 2: 3);");

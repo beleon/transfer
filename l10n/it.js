@@ -5,8 +5,8 @@ OC.L10N.register(
     "Transfer" : "Trasferisci",
     "Link" : "Collegamento",
     "File name" : "Nome file",
-    "Extension" : "Estensione",
     "Checksum" : "Checksum",
+    "Cancel" : "Annulla",
     "Upload" : "Carica"
 },
 "nplurals=3; plural=n == 1 ? 0 : n != 0 && n % 1000000 == 0 ? 1 : 2;");

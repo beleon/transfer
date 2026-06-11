@@ -1,5 +1,6 @@
 { "translations": {
-    "Files" : "Fail",
+    "Files" : "Fail-fail",
+    "Cancel" : "Cancel",
     "Upload" : "Muat naik"
 },"pluralForm" :"nplurals=1; plural=0;"
 }

@@ -1,7 +1,7 @@
 { "translations": {
-    "Files" : "ไฟล์",
     "Transfer" : "โอนย้าย",
     "Link" : "ลิงก์",
+    "Cancel" : "Cancel",
     "Upload" : "อัปโหลด"
 },"pluralForm" :"nplurals=1; plural=0;"
 }

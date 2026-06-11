@@ -1,5 +1,6 @@
 { "translations": {
-    "Files" : "Fichieren",
+    "Files" : "Dateien",
+    "Cancel" : "Cancel",
     "Upload" : "Eroplueden"
 },"pluralForm" :"nplurals=2; plural=(n != 1);"
 }

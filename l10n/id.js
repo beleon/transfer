@@ -1,10 +1,12 @@
 OC.L10N.register(
     "transfer",
     {
-    "Files" : "Berkas",
+    "Files" : "File",
     "Transfer" : "Transfer",
     "Link" : "Tautan",
-    "Checksum" : "checksum",
+    "File name" : "Nama file",
+    "Checksum" : "Checksum",
+    "Cancel" : "Batal",
     "Upload" : "Unggah"
 },
 "nplurals=1; plural=0;");

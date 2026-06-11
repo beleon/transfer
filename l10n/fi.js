@@ -14,8 +14,8 @@ OC.L10N.register(
     "Add a file to Nextcloud from a web link." : "Lisää tiedosto Nextcloudiin verkkolinkistä.",
     "Link" : "Linkki",
     "File name" : "Tiedostonimi",
-    "Extension" : "Tiedostopääte",
     "Checksum" : "Tarkistussumma",
+    "Cancel" : "Peruuta",
     "Upload" : "Lähetä",
     "The upload is queued and will begin processing soon." : "Lähetys on asetettu jonoon ja sen käsittely aloitetaan pian."
 },

@@ -1,8 +1,10 @@
 { "translations": {
-    "Files" : "Berkas",
+    "Files" : "File",
     "Transfer" : "Transfer",
     "Link" : "Tautan",
-    "Checksum" : "checksum",
+    "File name" : "Nama file",
+    "Checksum" : "Checksum",
+    "Cancel" : "Batal",
     "Upload" : "Unggah"
 },"pluralForm" :"nplurals=1; plural=0;"
 }

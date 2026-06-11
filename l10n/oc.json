@@ -1,9 +1,8 @@
 { "translations": {
-    "Files" : "Fichièrs",
     "Link" : "Ligam",
     "File name" : "Nom de fichièr",
-    "Extension" : "Extension",
     "Checksum" : "Contraròtle de soma",
-    "Upload" : "Cargament"
+    "Cancel" : "Cancel",
+    "Upload" : "Telecargament"
 },"pluralForm" :"nplurals=2; plural=(n > 1);"
 }

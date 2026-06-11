@@ -1,6 +1,6 @@
 { "translations": {
-    "Files" : "Files",
     "Link" : "Ligamine",
+    "Cancel" : "Cancel",
     "Upload" : "Incargar"
 },"pluralForm" :"nplurals=2; plural=(n != 1);"
 }

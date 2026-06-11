@@ -1,8 +1,8 @@
 OC.L10N.register(
     "transfer",
     {
-    "Files" : "Ֆայլեր",
     "Link" : "Հղում",
+    "Cancel" : "Cancel",
     "Upload" : "Բեռնել"
 },
 "nplurals=2; plural=(n != 1);");

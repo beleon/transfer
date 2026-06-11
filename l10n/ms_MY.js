@@ -1,7 +1,8 @@
 OC.L10N.register(
     "transfer",
     {
-    "Files" : "Fail",
+    "Files" : "Fail-fail",
+    "Cancel" : "Cancel",
     "Upload" : "Muat naik"
 },
 "nplurals=1; plural=0;");

@@ -7,8 +7,8 @@ OC.L10N.register(
     "Add a file to Nextcloud from a web link." : "WebリンクからNextcloudへファイルを追加します。",
     "Link" : "リンク",
     "File name" : "ファイル名",
-    "Extension" : "拡張",
     "Checksum" : "チェックサム",
+    "Cancel" : "キャンセル",
     "Upload" : "アップロード"
 },
 "nplurals=1; plural=0;");

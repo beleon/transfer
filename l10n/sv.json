@@ -3,8 +3,9 @@
     "Transfer" : "Överför",
     "Link" : "Länk",
     "File name" : "Filnamn",
-    "Extension" : "Tillägg",
+    "Algorithm" : "Algoritm",
     "Checksum" : "Checksumma",
+    "Cancel" : "Avbryt",
     "Upload" : "Ladda upp"
 },"pluralForm" :"nplurals=2; plural=(n != 1);"
 }

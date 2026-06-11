@@ -1,11 +1,12 @@
 OC.L10N.register(
     "transfer",
     {
-    "Files" : "Skrár",
+    "Files" : "Skráaforrit",
     "Transfer" : "Færa",
     "Link" : "Tengill",
     "File name" : "Skráarheiti",
-    "Extension" : "Skráarending",
+    "Algorithm" : "Reiknirit",
+    "Cancel" : "Cancel",
     "Upload" : "Senda inn"
 },
 "nplurals=2; plural=(n % 10 != 1 || n % 100 == 11);");

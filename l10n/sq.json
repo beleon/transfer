@@ -1,6 +1,7 @@
 { "translations": {
-    "Files" : "Skedarët",
+    "Files" : "Skedarë",
     "Link" : "Lidhje",
+    "Cancel" : "Cancel",
     "Upload" : "Ngarkoni"
 },"pluralForm" :"nplurals=2; plural=(n != 1);"
 }

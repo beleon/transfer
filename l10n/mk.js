@@ -7,8 +7,8 @@ OC.L10N.register(
     "Add a file to Nextcloud from a web link." : "Додајте датотека од веб-врска.",
     "Link" : "Линк",
     "File name" : "Име на датотека",
-    "Extension" : "Екстензија",
     "Checksum" : "Контролна сума",
+    "Cancel" : "Откажи",
     "Upload" : "Прикачи"
 },
 "nplurals=2; plural=(n % 10 == 1 && n % 100 != 11) ? 0 : 1;");
