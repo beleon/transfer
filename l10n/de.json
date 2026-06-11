@@ -1,10 +1,26 @@
 { "translations": {
     "Upload by link" : "Über einen Link hochladen",
+    "Transfer of {url} failed" : "Der Download von {url} ist fehlgeschlagen",
+    "Transfer of {url} failed because its checksum did not match" : "Die Übertragung von {url} ist fehlgeschlagen, da die Prüfsumme nicht übereinstimmt.",
+    "Transfer of {url} was blocked because it uses a restricted address" : "Die Übertragung von {url} wurde blockiert, weil eine eingeschränkte Adresse verwendet wird.",
+    "Transfer of {url} started" : "Transfer von {url} gestartet",
+    "Saved from {url}" : "Gespeichert von {url}",
     "{url} was saved to {file}" : "{url} wurde in {file} gespeichert.",
+    "An upload by link was unsuccessful" : "Ein Upload über den Link war nicht erfolgreich.",
+    "Files" : "Dateien",
+    "An upload by link is being processed" : "Ein Upload per Link wird verarbeitet.",
     "An upload by link was successful" : "Ein Upload per Link war erfolgreich.",
+    "Transfer" : "Übertragen",
+    "Add a file to Nextcloud from a web link." : "Von einem Weblink eine Datei zu Nextcloud hinzufügen ",
     "Link" : "Link",
     "File name" : "Dateiname",
+    "Some websites provide a checksum in addition to the file. This is used after the transfer to verify that the file is not corrupted." : "Einige Webseiten bieten zusätzlich zur Datei eine Prüfsumme an. Diese wird nach dem Transfer verwendet, um zu überprüfen, ob die Datei in Ordnung ist.",
+    "Algorithm" : "Algorithmus",
+    "Checksum" : "Prüfsumme",
     "Cancel" : "Abbrechen",
+    "Upload" : "Hochladen",
+    "The upload is queued and will begin processing soon." : "Die Upload ist in der Warteschlange und wird bald verarbeitet werden.",
+    "Failed to add the upload to the queue. The server responded with status code {statusCode}." : "Fehler beim Hinzufügen des Uploads zur Warteschlange. Der Server hat mit dem Statuscode {statusCode} geantwortet.",
     "Failed to add the upload to the queue." : "Fehler beim Hinzufügen des Uploads zur Warteschlange."
 },"pluralForm" :"nplurals=2; plural=(n != 1);"
 }

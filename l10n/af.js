@@ -1,6 +1,8 @@
 OC.L10N.register(
     "transfer",
     {
-    "Cancel" : "Cancel"
+    "Files" : "Lêer ",
+    "Cancel" : "Cancel",
+    "Upload" : "Oplaai"
 },
 "nplurals=2; plural=(n != 1);");

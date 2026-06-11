@@ -1,7 +1,6 @@
 { "translations": {
-    "Link" : "Ligilo",
-    "File name" : "Dosiernomo",
+    "Files" : "Lêer ",
     "Cancel" : "Cancel",
-    "Upload" : "Alŝuti"
+    "Upload" : "Oplaai"
 },"pluralForm" :"nplurals=2; plural=(n != 1);"
 }

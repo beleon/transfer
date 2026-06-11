@@ -3,6 +3,7 @@ OC.L10N.register(
     {
     "Link" : "Ligilo",
     "File name" : "Dosiernomo",
-    "Cancel" : "Cancel"
+    "Cancel" : "Cancel",
+    "Upload" : "Alŝuti"
 },
 "nplurals=2; plural=(n != 1);");

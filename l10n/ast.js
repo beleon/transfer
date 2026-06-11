@@ -1,0 +1,18 @@
+OC.L10N.register(
+    "transfer",
+    {
+    "Transfer of {url} failed" : "La tresferencia de «{url}» falló",
+    "Transfer of {url} failed because its checksum did not match" : "La tresferencia de «{url}» falló porque la suma de comprobación nun concasa",
+    "Transfer of {url} was blocked because it uses a restricted address" : "Bloquióse la tresferencia de «{url}»  porque usa una direición restrinxida",
+    "Transfer of {url} started" : "Comenzó la tresferencia de: {url}",
+    "Files" : "Ficheros",
+    "An upload by link is being processed" : "Ta procesándose una xuba per enllaz",
+    "Transfer" : "Tresferir",
+    "Link" : "Enllaz",
+    "File name" : "Nome del ficheru",
+    "Checksum" : "Suma de comprobación",
+    "Cancel" : "Cancel",
+    "Upload" : "Xunir",
+    "The upload is queued and will begin processing soon." : "La xuba ta na cola y va procesase pronto."
+},
+"nplurals=2; plural=(n != 1);");

@@ -1,4 +1,10 @@
 { "translations": {
-    "File name" : "Filnavn"
+    "Files" : "Filer",
+    "Transfer" : "Overførsel",
+    "Link" : "Link",
+    "File name" : "Filnavn",
+    "Checksum" : "Checksum",
+    "Cancel" : "Annullér",
+    "Upload" : "Upload"
 },"pluralForm" :"nplurals=2; plural=(n != 1);"
 }

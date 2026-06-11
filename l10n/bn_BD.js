@@ -1,6 +1,7 @@
 OC.L10N.register(
     "transfer",
     {
-    "Cancel" : "रद्द करा"
+    "Cancel" : "Cancel",
+    "Upload" : "আপলোড"
 },
 "nplurals=2; plural=(n != 1);");

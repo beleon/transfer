@@ -1,6 +1,12 @@
 OC.L10N.register(
     "transfer",
     {
-    "File name" : "Filnavn"
+    "Files" : "Filer",
+    "Transfer" : "Overførsel",
+    "Link" : "Link",
+    "File name" : "Filnavn",
+    "Checksum" : "Checksum",
+    "Cancel" : "Annullér",
+    "Upload" : "Upload"
 },
 "nplurals=2; plural=(n != 1);");
