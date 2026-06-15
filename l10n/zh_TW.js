@@ -14,6 +14,7 @@ OC.L10N.register(
     "An upload by link was successful" : "透過連結上傳成功",
     "Transfer" : "轉移",
     "Add a file to Nextcloud from a web link." : "從網路連結將檔案新增至 Nextcloud。",
+    "\"Upload by link\" functionality for Nextcloud. Transfer files\n                using the full bandwidth available to your server. Avoid the need to\n                leave your own device online to finish an upload." : "Nextcloud 的「透過連結上傳」功能。\n            使用伺服器可用的全部頻寬轉移檔案。\n            不需要讓自己的裝置維持在線上即可完成上傳。",
     "Link" : "連結",
     "File name" : "檔案名稱",
     "Some websites provide a checksum in addition to the file. This is used after the transfer to verify that the file is not corrupted." : "有些網站除了檔案以外也提供檢查碼。這是在轉移後用於驗證檔案未損毀。",

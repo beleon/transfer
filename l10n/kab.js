@@ -5,6 +5,7 @@ OC.L10N.register(
     "Transfer" : "Seḍfeṛ",
     "Link" : "Aseɣwen",
     "File name" : "Isem n ufaylu",
+    "Algorithm" : "Awarzim",
     "Cancel" : "Semmet",
     "Upload" : "Sili"
 },

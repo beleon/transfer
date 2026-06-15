@@ -14,6 +14,7 @@ OC.L10N.register(
     "An upload by link was successful" : "D'éirigh le huaslódáil trí nasc",
     "Transfer" : "Aistriú",
     "Add a file to Nextcloud from a web link." : "Cuir comhad le Nextcloud ó nasc gréasáin.",
+    "\"Upload by link\" functionality for Nextcloud. Transfer files\n                using the full bandwidth available to your server. Avoid the need to\n                leave your own device online to finish an upload." : "Feidhmiúlacht \"Uaslódáil trí nasc\" do Nextcloud. Aistrigh comhaid\n ag baint úsáide as an bandaleithead iomlán atá ar fáil do do fhreastalaí. Seachain an gá do\n ghléas féin a fhágáil ar líne chun uaslódáil a chríochnú.",
     "Link" : "Nasc",
     "File name" : "Ainm comhaid",
     "Some websites provide a checksum in addition to the file. This is used after the transfer to verify that the file is not corrupted." : "Soláthraíonn roinnt suíomhanna gréasáin seiceam chomh maith leis an gcomhad. Úsáidtear é seo tar éis an aistrithe chun a fhíorú nach bhfuil an comhad truaillithe.",

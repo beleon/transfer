@@ -13,7 +13,8 @@ OC.L10N.register(
     "An upload by link is being processed" : "Bağlantı ile yükleme yapılıyor",
     "An upload by link was successful" : "Bağlantı ile yükleme tamamlandı",
     "Transfer" : "Aktar",
-    "Add a file to Nextcloud from a web link." : "Bir bağlantıyı kullanarak Nextcloud üzerine bir dosya ekler.",
+    "Add a file to Nextcloud from a web link." : "Bir bağlantı ile Nextcloud üzerine bir dosya ekler.",
+    "\"Upload by link\" functionality for Nextcloud. Transfer files\n                using the full bandwidth available to your server. Avoid the need to\n                leave your own device online to finish an upload." : "Nextcloud için \"Bağlantı ile yükleme\" özelliği. Sunucunuzun\n                kullanabileceği tam bant genişliğini kullanarak dosyaları aktarır. Yükleme işlemini\n                tamamlamak için kendi aygıtınızı çevrim içi tutma gerekliliğini ortadan kaldırın.",
     "Link" : "Bağlantı",
     "File name" : "Dosya adı",
     "Some websites provide a checksum in addition to the file. This is used after the transfer to verify that the file is not corrupted." : "Bazı siteler dosyaya ek olarak bir sağlama değeri verir. Bu değer, aktarımdan sonra dosyanın bozulmadığını doğrulamak için kullanılır.",
@@ -21,8 +22,8 @@ OC.L10N.register(
     "Checksum" : "Sağlama",
     "Cancel" : "İptal",
     "Upload" : "Yükle",
-    "The upload is queued and will begin processing soon." : "Yükleme işlemi sıraya alındı ve yakında işlenecek.",
-    "Failed to add the upload to the queue. The server responded with status code {statusCode}." : "Yükleme sıraya eklenemedi. Sunucu {statusCode} durum koduyla yanıt verdi.",
-    "Failed to add the upload to the queue." : "Yükleme sıraya eklenemedi."
+    "The upload is queued and will begin processing soon." : "Yükleme sıraya alındı ve yakında işlenecek.",
+    "Failed to add the upload to the queue. The server responded with status code {statusCode}." : "Yükleme sıraya alınamadı. Sunucu {statusCode} durum koduyla yanıt verdi.",
+    "Failed to add the upload to the queue." : "Yükleme sıraya alınamadı."
 },
 "nplurals=2; plural=(n > 1);");
