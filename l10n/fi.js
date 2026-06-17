@@ -14,6 +14,7 @@ OC.L10N.register(
     "Add a file to Nextcloud from a web link." : "Lisää tiedosto Nextcloudiin verkkolinkistä.",
     "Link" : "Linkki",
     "File name" : "Tiedostonimi",
+    "Algorithm" : "Algoritmi",
     "Checksum" : "Tarkistussumma",
     "Cancel" : "Peruuta",
     "Upload" : "Lähetä",
