@@ -1,13 +1,27 @@
 { "translations": {
-    "Transfer of {url} failed" : "Transfer of {url} failed",
+    "Upload by link" : "بارگذاری از طریق پیوند",
+    "Transfer of {url} failed" : "انتقال {url} ناموفق بود",
+    "Transfer of {url} failed because its checksum did not match" : "انتقال {url} به دلیل عدم تطابق چکسام ناموفق بود",
+    "Transfer of {url} was blocked because it uses a restricted address" : "انتقال {url} به دلیل استفاده از آدرس محدود شده مسدود شد",
+    "Transfer of {url} started" : "انتقال {url} آغاز شد",
+    "Saved from {url}" : "ذخیره شده از {url}",
+    "{url} was saved to {file}" : "{url} در {file} ذخیره شد",
+    "An upload by link was unsuccessful" : "بارگذاری از طریق پیوند ناموفق بود",
     "Files" : "فایل‌ها",
+    "An upload by link is being processed" : "بارگذاری از طریق پیوند در حال پردازش است",
+    "An upload by link was successful" : "بارگذاری از طریق پیوند با موفقیت انجام شد",
     "Transfer" : "انتقال",
-    "Add a file to Nextcloud from a web link." : "Add a file to Nextcloud from a web link.",
+    "Add a file to Nextcloud from a web link." : "افزودن یک فایل به نکست‌کلود از طریق یک پیوند وب.",
+    "\"Upload by link\" functionality for Nextcloud. Transfer files\n                using the full bandwidth available to your server. Avoid the need to\n                leave your own device online to finish an upload." : "قابلیت «بارگذاری از طریق پیوند» برای نکست‌کلود. فایل‌ها را با استفاده از پهنای باند کامل سرور خود انتقال دهید. نیازی به روشن نگه داشتن دستگاه خود برای تکمیل بارگذاری نیست.",
     "Link" : "پیوند",
     "File name" : "نام فایل",
-    "Algorithm" : "Algorithm",
-    "Checksum" : "جمع‌آزما",
+    "Some websites provide a checksum in addition to the file. This is used after the transfer to verify that the file is not corrupted." : "برخی وب‌سایت‌ها علاوه بر فایل، یک چکسام نیز ارائه می‌دهند. این چکسام پس از انتقال برای تأیید عدم خرابی فایل استفاده می‌شود.",
+    "Algorithm" : "الگوریتم",
+    "Checksum" : "چکسام",
     "Cancel" : "لغو",
-    "Upload" : "بارگذاری"
+    "Upload" : "بارگذاری",
+    "The upload is queued and will begin processing soon." : "بارگذاری در صف قرار گرفته و به زودی پردازش آغاز می‌شود.",
+    "Failed to add the upload to the queue. The server responded with status code {statusCode}." : "افزودن بارگذاری به صف ناموفق بود. سرور با کد وضعیت {statusCode} پاسخ داد.",
+    "Failed to add the upload to the queue." : "افزودن بارگذاری به صف ناموفق بود."
 },"pluralForm" :"nplurals=2; plural=(n > 1);"
 }
