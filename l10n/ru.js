@@ -7,6 +7,7 @@ OC.L10N.register(
     "Add a file to Nextcloud from a web link." : "Добавить файл в Nextcloud по ссылке.",
     "Link" : "Ссылка",
     "File name" : "Имя файла",
+    "Algorithm" : " Алгоритм",
     "Checksum" : "Контр. сумма",
     "Cancel" : "Отмена",
     "Upload" : "Отправить"
