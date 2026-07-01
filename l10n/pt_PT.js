@@ -3,18 +3,22 @@ OC.L10N.register(
     {
     "Transfer of {url} failed" : "A transferência de {url} foi mal sucedida",
     "Transfer of {url} failed because its checksum did not match" : "A transferência de {url} falhou porque a soma de verificação não correspondeu",
+    "Transfer of {url} was blocked because it uses a restricted address" : "A transferência de {url} foi bloqueada porque utiliza um endereço restrito",
     "Saved from {url}" : "Salvo de {url}",
     "An upload by link was unsuccessful" : "Um upload por link não foi bem-sucedido",
     "Files" : "Ficheiros",
+    "An upload by link is being processed" : "Um upload por link está sendo processado",
     "Transfer" : "Transfere",
     "Add a file to Nextcloud from a web link." : "Adicionar um ficheiro ao Nextcloud a partir de uma hiperligação da web.",
     "\"Upload by link\" functionality for Nextcloud. Transfer files\n                using the full bandwidth available to your server. Avoid the need to\n                leave your own device online to finish an upload." : "Funcionalidade “Upload por link” para o Nextcloud. Transfira arquivos\nutilizando toda a largura de banda disponível no seu servidor. Evite a necessidade de\nmanter seu próprio dispositivo conectado à internet para concluir um envio.",
     "Link" : "Hiperligação",
     "File name" : "Nome do ficheiro",
     "Some websites provide a checksum in addition to the file. This is used after the transfer to verify that the file is not corrupted." : "Alguns sites fornecem uma soma de verificação além do arquivo. Isso é usado após a transferência para verificar se o arquivo não está corrompido.",
+    "Checksum" : "Soma de verificação",
     "Cancel" : "Cancelar",
     "Upload" : "Enviar",
     "The upload is queued and will begin processing soon." : "O upload está na fila e começará a ser processado em breve.",
+    "Failed to add the upload to the queue. The server responded with status code {statusCode}." : "Falha ao adicionar o upload à fila. O servidor respondeu com o código de status {statusCode}.",
     "Failed to add the upload to the queue." : "Falha ao adicionar o upload à fila."
 },
 "nplurals=3; plural=(n == 0 || n == 1) ? 0 : n != 0 && n % 1000000 == 0 ? 1 : 2;");
