@@ -1,6 +1,7 @@
 OC.L10N.register(
     "transfer",
     {
+    "Upload by link" : "Upload por link",
     "Transfer of {url} failed" : "A transferência de {url} foi mal sucedida",
     "Transfer of {url} failed because its checksum did not match" : "A transferência de {url} falhou porque a soma de verificação não correspondeu",
     "Transfer of {url} was blocked because it uses a restricted address" : "A transferência de {url} foi bloqueada porque utiliza um endereço restrito",
@@ -8,6 +9,7 @@ OC.L10N.register(
     "An upload by link was unsuccessful" : "Um upload por link não foi bem-sucedido",
     "Files" : "Ficheiros",
     "An upload by link is being processed" : "Um upload por link está sendo processado",
+    "An upload by link was successful" : "Um upload por link foi bem-sucedido",
     "Transfer" : "Transfere",
     "Add a file to Nextcloud from a web link." : "Adicionar um ficheiro ao Nextcloud a partir de uma hiperligação da web.",
     "\"Upload by link\" functionality for Nextcloud. Transfer files\n                using the full bandwidth available to your server. Avoid the need to\n                leave your own device online to finish an upload." : "Funcionalidade “Upload por link” para o Nextcloud. Transfira arquivos\nutilizando toda a largura de banda disponível no seu servidor. Evite a necessidade de\nmanter seu próprio dispositivo conectado à internet para concluir um envio.",
