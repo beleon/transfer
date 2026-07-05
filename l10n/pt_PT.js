@@ -5,6 +5,7 @@ OC.L10N.register(
     "Transfer of {url} failed" : "A transferência de {url} foi mal sucedida",
     "Transfer of {url} failed because its checksum did not match" : "A transferência de {url} falhou porque a soma de verificação não correspondeu",
     "Transfer of {url} was blocked because it uses a restricted address" : "A transferência de {url} foi bloqueada porque utiliza um endereço restrito",
+    "Transfer of {url} started" : "A transferência de {url} foi iniciada",
     "Saved from {url}" : "Salvo de {url}",
     "{url} was saved to {file}" : "{url} foi salvo em {file}",
     "An upload by link was unsuccessful" : "Um upload por link não foi bem-sucedido",
