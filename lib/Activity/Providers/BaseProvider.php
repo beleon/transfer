@@ -21,7 +21,7 @@ abstract class BaseProvider implements IProvider {
         $this->urlGenerator = $urlGenerator;
     }
 
-    protected function setIcon(IEvent $event) {
+    protected function setIcon(IEvent $event): void {
         // TODO: Respect activityManager->getRequirePNG()
         $event->setIcon(
             $this->urlGenerator->getAbsoluteUrl(

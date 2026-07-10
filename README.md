@@ -14,7 +14,7 @@
 </p>
 
 <p align="center">
-  <a href="https://apps.nextcloud.com/apps/transfer"><img src="https://img.shields.io/badge/Nextcloud-29–33-0082c9?logo=nextcloud&logoColor=white" alt="Nextcloud 29–33"></a>
+  <a href="https://apps.nextcloud.com/apps/transfer"><img src="https://img.shields.io/badge/Nextcloud-29–34-0082c9?logo=nextcloud&logoColor=white" alt="Nextcloud 29–34"></a>
   <a href="https://github.com/beleon/transfer/releases/latest"><img src="https://img.shields.io/github/v/release/beleon/transfer?color=2ea44f" alt="Latest release"></a>
   <a href="COPYING"><img src="https://img.shields.io/badge/license-AGPL--3.0-blue" alt="AGPL-3.0"></a>
 </p>

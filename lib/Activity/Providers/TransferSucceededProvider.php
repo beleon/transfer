@@ -2,14 +2,15 @@
 namespace OCA\Transfer\Activity\Providers;
 
 use OCP\Activity\IEvent;
+use OCP\Activity\Exceptions\UnknownActivityException;
 
 class TransferSucceededProvider extends BaseProvider {
     public const TYPE_TRANSFER_SUCCEEDED = "transfer_succeeded";
     public const SUBJECT_TRANSFER_SUCCEEDED = "transfer_succeeded";
 
-    public function parse($language, IEvent $event, ?IEvent $previousEvent = null) {
+    public function parse($language, IEvent $event, ?IEvent $previousEvent = null): IEvent {
         if ($event->getApp() !== "transfer" || $event->getType() !== self::TYPE_TRANSFER_SUCCEEDED) {
-            throw new \InvalidArgumentException();
+            throw new UnknownActivityException();
         }
 
         $l = $this->languageFactory->get("transfer", $language);

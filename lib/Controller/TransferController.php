@@ -2,15 +2,16 @@
 namespace OCA\Transfer\Controller;
 
 use OCP\BackgroundJob\IJobList;
+use OCP\AppFramework\Controller;
+use OCP\AppFramework\Http;
+use OCP\AppFramework\Http\Attribute\NoAdminRequired;
+use OCP\AppFramework\Http\Attribute\NoCSRFRequired;
+use OCP\AppFramework\Http\DataResponse;
 use OCP\Http\Client\IClientService;
 use OCP\Http\Client\LocalServerException;
 use OCP\IRequest;
-use OCP\AppFramework\Controller;
-use OCP\AppFramework\Http;
-use OCP\AppFramework\Http\DataResponse;
 
 use OCA\Transfer\BackgroundJob\TransferJob;
-use OCA\Transfer\Service\TransferService;
 
 class TransferController extends Controller {
 	private $userId;
@@ -55,20 +56,16 @@ class TransferController extends Controller {
 		IRequest $request,
 		IJobList $jobList,
 		IClientService $clientService,
-		TransferService $service,
 		$UserId
 	) {
 		parent::__construct($AppName, $request);
 		$this->userId = $UserId;
 		$this->jobList = $jobList;
 		$this->clientService = $clientService;
-		$this->service = $service;
 	}
 
-	/**
-	 * @NoAdminRequired
-	 */
-	public function transfer(string $path, string $url, string $hashAlgo, string $hash) {
+	#[NoAdminRequired]
+	public function transfer(string $path, string $url, string $hashAlgo, string $hash): DataResponse {
 		if (basename($path) === '') {
 			return new DataResponse('File name is required', Http::STATUS_BAD_REQUEST);
 		}
@@ -90,11 +87,10 @@ class TransferController extends Controller {
 
 	/**
 	 * Probe a URL via HEAD request to determine the file extension.
-	 *
-	 * @NoAdminRequired
-	 * @NoCSRFRequired
 	 */
-	public function probe(string $url) {
+	#[NoAdminRequired]
+	#[NoCSRFRequired]
+	public function probe(string $url): DataResponse {
 		try {
 			$client = $this->clientService->newClient();
 			$response = $client->head($url, ['timeout' => 10]);

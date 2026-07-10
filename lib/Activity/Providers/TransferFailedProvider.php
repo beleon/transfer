@@ -2,6 +2,7 @@
 namespace OCA\Transfer\Activity\Providers;
 
 use OCP\Activity\IEvent;
+use OCP\Activity\Exceptions\UnknownActivityException;
 
 class TransferFailedProvider extends BaseProvider {
     public const TYPE_TRANSFER_FAILED = "transfer_failed";
@@ -9,9 +10,9 @@ class TransferFailedProvider extends BaseProvider {
     public const SUBJECT_TRANSFER_HASH_FAILED = "transfer_hash_failed";
     public const SUBJECT_TRANSFER_BLOCKED = "transfer_blocked";
 
-    public function parse($language, IEvent $event, ?IEvent $previousEvent = null) {
+    public function parse($language, IEvent $event, ?IEvent $previousEvent = null): IEvent {
         if ($event->getApp() !== "transfer" || $event->getType() !== self::TYPE_TRANSFER_FAILED) {
-            throw new \InvalidArgumentException();
+            throw new UnknownActivityException();
         }
 
         $l = $this->languageFactory->get("transfer", $language);

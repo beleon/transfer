@@ -15,27 +15,27 @@ class Filter implements IFilter {
 		$this->url = $url;
 	}
 
-	public function getIdentifier() {
+	public function getIdentifier(): string {
 		return "transfer";
 	}
 
-	public function getName() {
+	public function getName(): string {
 		return $this->l->t("Upload by link");
 	}
 
-	public function getPriority() {
+	public function getPriority(): int {
 		return 30;
 	}
 
-	public function getIcon() {
+	public function getIcon(): string {
 		return $this->url->imagePath("transfer", "app-dark.svg");
 	}
 
-	public function filterTypes(array $types) {
+	public function filterTypes(array $types): array {
 		return $types;
 	}
 
-	public function allowedApps() {
+	public function allowedApps(): array {
 		return ["transfer"];
 	}
 }

@@ -34,7 +34,7 @@ class TransferService {
 	/**
 	 * @return Whether the transfer succeeded.
 	 */
-	public function transfer(string $userId, string $path, string $url, string $hashAlgo, string $hash) {
+	public function transfer(string $userId, string $path, string $url, string $hashAlgo, string $hash): bool {
 		$userFolder = $this->rootFolder->getUserFolder($userId);
 
 		$this->generateStartedEvent($userId, $path, $url);
@@ -81,7 +81,7 @@ class TransferService {
 		}
 	}
 
-	protected function generateStartedEvent(string $userId, string $path, string $url) {
+	protected function generateStartedEvent(string $userId, string $path, string $url): void {
 		$event = $this->activityManager->generateEvent();
 		$event->setApp("transfer");
 		$event->setType(TransferStartedProvider::TYPE_TRANSFER_STARTED);
@@ -90,7 +90,7 @@ class TransferService {
 		$this->activityManager->publish($event);
 	}
 
-	protected function generateFailedEvent(string $userId, string $path, string $url) {
+	protected function generateFailedEvent(string $userId, string $path, string $url): void {
 		$event = $this->activityManager->generateEvent();
 		$event->setApp("transfer");
 		$event->setType(TransferFailedProvider::TYPE_TRANSFER_FAILED);
@@ -99,7 +99,7 @@ class TransferService {
 		$this->activityManager->publish($event);
 	}
 
-	protected function generateHashFailedEvent(string $userId, string $path, string $url) {
+	protected function generateHashFailedEvent(string $userId, string $path, string $url): void {
 		$event = $this->activityManager->generateEvent();
 		$event->setApp("transfer");
 		$event->setType(TransferFailedProvider::TYPE_TRANSFER_FAILED);
@@ -108,7 +108,7 @@ class TransferService {
 		$this->activityManager->publish($event);
 	}
 
-	protected function generateBlockedEvent(string $userId, string $path, string $url) {
+	protected function generateBlockedEvent(string $userId, string $path, string $url): void {
 		$event = $this->activityManager->generateEvent();
 		$event->setApp("transfer");
 		$event->setType(TransferFailedProvider::TYPE_TRANSFER_FAILED);
@@ -117,7 +117,7 @@ class TransferService {
 		$this->activityManager->publish($event);
 	}
 
-	protected function generateSucceededEvent(string $userId, string $path, string $url, int $fileId) {
+	protected function generateSucceededEvent(string $userId, string $path, string $url, int $fileId): void {
 		$event = $this->activityManager->generateEvent();
 		$event->setApp("transfer");
 		$event->setType(TransferSucceededProvider::TYPE_TRANSFER_SUCCEEDED);
