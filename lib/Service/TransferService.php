@@ -46,6 +46,7 @@ class TransferService {
 	 * @return Whether the transfer succeeded.
 	 */
 	public function transfer(string $userId, string $path, string $url, string $hashAlgo, string $hash, string $transferId) {
+		$hash = strtolower(trim($hash));
 		$userFolder = $this->rootFolder->getUserFolder($userId);
 
 		$this->generateStartedEvent($userId, $path, $url);
@@ -57,56 +58,66 @@ class TransferService {
 		$lastUpdate = 0;
 		$cancelled = false;
 
-		// Register this transfer in the user's index
+		// Register this transfer in the user's index. The TTL is generous:
+		// entries are removed on completion, and stale ones are skipped by
+		// the progress endpoint once their progress key expires.
 		if ($cache) {
 			$index = json_decode($cache->get('index:' . $userId) ?: '[]', true);
 			$index[] = $transferId;
-			$cache->set('index:' . $userId, json_encode($index), 3600);
+			$cache->set('index:' . $userId, json_encode($index), 86400);
 		}
 
 		try {
-			$options = ["sink" => $tmpPath, "timeout" => 0, "read_timeout" => 120];
+			$options = [
+				"sink" => $tmpPath,
+				"timeout" => 0,
+				// Abort when the connection stalls (under 1 byte/s for 120s).
+				// Guzzle's read_timeout only applies to its stream handler,
+				// so use the curl options directly.
+				"curl" => [
+					CURLOPT_LOW_SPEED_LIMIT => 1,
+					CURLOPT_LOW_SPEED_TIME => 120,
+				],
+			];
 			if ($cache) {
 				// Use raw curl progress function — returning non-zero aborts the transfer
-				$options["curl"] = [
-					CURLOPT_NOPROGRESS => false,
-					CURLOPT_PROGRESSFUNCTION => function ($resource, $downloadTotal, $downloaded, $uploadTotal, $uploaded) use ($cache, $transferId, $path, $url, &$lastUpdate, &$cancelled) {
-						$now = time();
-						if ($now - $lastUpdate < 2) {
-							return 0;
-						}
-						$lastUpdate = $now;
-
-						// Check for explicit cancellation
-						$shouldCancel = (bool)$cache->get('cancel:' . $transferId);
-
-						// Check heartbeat (only exists for immediate transfers)
-						if (!$shouldCancel) {
-							$heartbeat = $cache->get('heartbeat:' . $transferId);
-							if ($heartbeat !== null && ($now - (int)$heartbeat) > 10) {
-								$shouldCancel = true;
-							}
-						}
-
-						if ($shouldCancel) {
-							$cancelled = true;
-							$cache->remove('cancel:' . $transferId);
-							$cache->remove('progress:' . $transferId);
-							return 1; // Abort curl
-						}
-
-						$cache->set('progress:' . $transferId, json_encode([
-							"id" => $transferId,
-							"filename" => basename($path),
-							"url" => $url,
-							"total" => $downloadTotal,
-							"downloaded" => $downloaded,
-							"updated" => $now,
-						]), 3600);
-
+				$options["curl"][CURLOPT_NOPROGRESS] = false;
+				$options["curl"][CURLOPT_PROGRESSFUNCTION] = function ($resource, $downloadTotal, $downloaded, $uploadTotal, $uploaded) use ($cache, $transferId, $path, $url, &$lastUpdate, &$cancelled) {
+					$now = time();
+					if ($now - $lastUpdate < 2) {
 						return 0;
-					},
-				];
+					}
+					$lastUpdate = $now;
+
+					// Check for explicit cancellation
+					$shouldCancel = (bool)$cache->get('cancel:' . $transferId);
+
+					// Check heartbeat (only exists for immediate transfers)
+					if (!$shouldCancel) {
+						$heartbeat = $cache->get('heartbeat:' . $transferId);
+						if ($heartbeat !== null && ($now - (int)$heartbeat) > 10) {
+							$shouldCancel = true;
+						}
+					}
+
+					if ($shouldCancel) {
+						$cancelled = true;
+						$cache->remove('cancel:' . $transferId);
+						$cache->remove('progress:' . $transferId);
+						return 1; // Abort curl
+					}
+
+					$cache->set('progress:' . $transferId, json_encode([
+						"id" => $transferId,
+						"filename" => basename($path),
+						"url" => $url,
+						"total" => $downloadTotal,
+						"downloaded" => $downloaded,
+						"updated" => $now,
+					]), 3600);
+
+					return 0;
+				};
 			}
 			$response = $client->get($url, $options);
 		} catch (\Exception $exception) {
@@ -126,7 +137,7 @@ class TransferService {
 
 		if ($cache) $this->removeTransfer($cache, $userId, $transferId);
 
-		if ($hash == "" || hash_file($hashAlgo, $tmpPath) == $hash) {
+		if ($hash === "" || hash_equals(hash_file($hashAlgo, $tmpPath), $hash)) {
 			$dirPath = dirname($path);
 			$filename = basename($path);
 
@@ -140,12 +151,20 @@ class TransferService {
 
 			// Retry loop in case of concurrent writes with the same filename
 			for ($attempt = 0; $attempt < 5; $attempt++) {
+				$file = null;
 				try {
 					$uniqueName = $dir->getNonExistingName($filename);
 					$file = $dir->newFile($uniqueName);
 					$file->putContent(fopen($tmpPath, 'r'));
 					break;
 				} catch (\Exception $e) {
+					// Don't leave a partial file behind before retrying
+					if ($file !== null) {
+						try {
+							$file->delete();
+						} catch (\Exception $ignored) {
+						}
+					}
 					if ($attempt === 4) {
 						unlink($tmpPath);
 						$this->generateFailedEvent($userId, $path, $url);
@@ -177,7 +196,7 @@ class TransferService {
 		if (empty($index)) {
 			$cache->remove('index:' . $userId);
 		} else {
-			$cache->set('index:' . $userId, json_encode($index), 3600);
+			$cache->set('index:' . $userId, json_encode($index), 86400);
 		}
 	}
 

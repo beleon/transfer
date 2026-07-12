@@ -330,11 +330,11 @@ function showDialog(currentPath) {
 						<button type="button" class="transfer-info-btn" id="transfer-info-toggle">?</button>
 					</label>
 					<div id="transfer-info-detail" class="transfer-info-detail" style="display:none">
-						<p>${t('transfer', 'Starts the transfer right away instead of waiting for the next background job cycle. The tab must remain open for the duration. Closing it cancels the transfer.')}</p>
+						<p>${t('transfer', 'Starts the transfer right away instead of waiting for the next background job cycle. Keep this page open until it finishes. Leaving or closing the page cancels the transfer.')}</p>
 					</div>
 				</div>
 
-				<p class="transfer-settings-hint">${t('transfer', 'You can track active transfers under Settings > Transfer.')}</p>
+				<p class="transfer-settings-hint">${t('transfer', 'Queued transfers can be tracked under Settings > Transfer.')}</p>
 
 				<div class="transfer-actions">
 					<button id="transfer-cancel" class="transfer-btn">${t('transfer', 'Cancel')}</button>
@@ -414,20 +414,32 @@ function showDialog(currentPath) {
 			infoDetail.style.display = infoDetail.style.display === 'none' ? 'block' : 'none'
 		})
 
+		// The settings hint only applies to queued transfers
+		const settingsHint = dialog.querySelector('.transfer-settings-hint')
+		immediateCheckbox.addEventListener('change', () => {
+			settingsHint.style.display = immediateCheckbox.checked ? 'none' : ''
+		})
+
 		let filenameEdited = false
 		let probedExtension = ''
 		let progressTimer = null
 		let transferId = null
+		let userCancelled = false
 
 		function cancelTransfer() {
 			if (transferId) {
 				const id = transferId
 				transferId = null
+				userCancelled = true
 				axios.post(
 					generateFilePath('transfer', 'ajax', 'cancel.php'),
 					{ transferId: id },
 				).catch(() => {})
 			}
+		}
+
+		function isDownloading() {
+			return downloadingSection.style.display !== 'none'
 		}
 
 		function formatBytes(bytes) {
@@ -472,26 +484,32 @@ function showDialog(currentPath) {
 				new URL(urlInput.value)
 				validUrl = true
 			} catch { /* invalid */ }
-			submitBtn.disabled = !(validUrl && getFilename())
+			// A checksum without an algorithm cannot be verified
+			const hashOk = hashInput.value.trim() === '' || hashAlgoSelect.value !== ''
+			submitBtn.disabled = !(validUrl && getFilename() && hashOk)
 		}
 
 		urlInput.addEventListener('input', updateDefaults)
 		filenameInput.addEventListener('input', () => { filenameEdited = filenameInput.value !== ''; updateValidity() })
+		hashInput.addEventListener('input', updateValidity)
+		hashAlgoSelect.addEventListener('change', updateValidity)
 
 		function close() {
 			if (progressTimer) clearInterval(progressTimer)
 			cancelTransfer()
+			document.removeEventListener('keydown', onKey)
 			overlay.remove()
 			resolve()
 		}
 
 		cancelBtn.addEventListener('click', close)
 		dlCancelBtn.addEventListener('click', close)
-		overlay.addEventListener('click', (e) => { if (e.target === overlay) close() })
+		// While a transfer is running, only the explicit Cancel button closes
+		// the dialog. Escape or a stray click outside must not kill it.
+		overlay.addEventListener('click', (e) => { if (e.target === overlay && !isDownloading()) close() })
 
 		function onKey(e) {
-			if (e.key === 'Escape') {
-				document.removeEventListener('keydown', onKey)
+			if (e.key === 'Escape' && !isDownloading()) {
 				close()
 			}
 		}
@@ -571,6 +589,11 @@ function showDialog(currentPath) {
 				} catch (error) {
 					if (progressTimer) clearInterval(progressTimer)
 					transferId = null
+					// The user cancelled: the dialog is already gone and the
+					// rejected start request is expected, not a failure.
+					if (userCancelled) {
+						return
+					}
 					const msg = (error.response && error.response.status)
 						? t('transfer', 'Transfer failed. The server responded with status code {statusCode}.', { statusCode: error.response.status })
 						: t('transfer', 'Transfer failed.')

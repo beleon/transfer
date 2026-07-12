@@ -59,7 +59,7 @@ You can build with a local toolchain or entirely in a container.
 
     npm ci && npm run build
 
-Either way the output lands in `js/` and `css/`.
+Either way the output lands in `js/`.
 To create a release archive: `make dist`
 
 ## Contributing

@@ -27,10 +27,14 @@ feature set for 1.0.
   queue still works without it.
 
 ### Changed
-- Hardened `TransferService`: per-transfer IDs, a 120-second read timeout so
-  stalled connections do not hang indefinitely, consolidated exception handling
+- Hardened `TransferService`: per-transfer IDs, stall detection that aborts a
+  transfer after 120 seconds without data, consolidated exception handling
   that always cleans up the temp file, and a retry loop for concurrent writes of
   the same filename.
+
+### Fixed
+- Checksums pasted in uppercase no longer fail verification. The comparison is
+  case-insensitive and constant-time now.
 
 ### Dependencies
 - dompurify 3.4.2 to 3.4.11

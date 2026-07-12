@@ -82,7 +82,11 @@ class TransferController extends Controller {
 			return new DataResponse('Unsupported hash algorithm', Http::STATUS_BAD_REQUEST);
 		}
 
-		$transferId = uniqid('t', true);
+		if ($hashAlgo === '' && trim($hash) !== '') {
+			return new DataResponse('An algorithm is required to verify the checksum', Http::STATUS_BAD_REQUEST);
+		}
+
+		$transferId = bin2hex(random_bytes(16));
 
 		$this->jobList->add(TransferJob::class, [
 			"userId" => $this->userId,
@@ -114,7 +118,11 @@ class TransferController extends Controller {
 			return new DataResponse('Unsupported hash algorithm', Http::STATUS_BAD_REQUEST);
 		}
 
-		$transferId = uniqid('t', true);
+		if ($hashAlgo === '' && trim($hash) !== '') {
+			return new DataResponse('An algorithm is required to verify the checksum', Http::STATUS_BAD_REQUEST);
+		}
+
+		$transferId = bin2hex(random_bytes(16));
 
 		$cache = $this->cacheFactory->createDistributed('transfer');
 		$cache->set('prepared:' . $transferId, json_encode([
@@ -149,11 +157,12 @@ class TransferController extends Controller {
 		}
 
 		$params = json_decode($data, true);
-		$cache->remove('prepared:' . $transferId);
 
 		if ($params['userId'] !== $this->userId) {
 			return new DataResponse('Unauthorized', Http::STATUS_FORBIDDEN);
 		}
+
+		$cache->remove('prepared:' . $transferId);
 
 		$success = $this->service->transfer(
 			$params['userId'], $params['path'], $params['url'],
@@ -166,7 +175,6 @@ class TransferController extends Controller {
 	 * Probe a URL via HEAD request to determine the file extension.
 	 *
 	 * @NoAdminRequired
-	 * @NoCSRFRequired
 	 */
 	public function probe(string $url) {
 		try {
@@ -188,7 +196,6 @@ class TransferController extends Controller {
 	 * Get progress of active transfers for the current user.
 	 *
 	 * @NoAdminRequired
-	 * @NoCSRFRequired
 	 */
 	public function progress(string $heartbeat = '') {
 		if (!$this->service->isProgressAvailable()) {
