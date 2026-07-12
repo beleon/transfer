@@ -41,6 +41,10 @@ feature set for 1.0.
   the dialog stuck on "Starting" because of this.
 - Cancelling an immediate transfer, from the dialog or from the settings page,
   returns the dialog to the form with all fields kept instead of closing it.
+- A failing download no longer produces a 500 on the Nextcloud server. The
+  remote site returning an error is a normal outcome: the start endpoint now
+  reports what happened (remote status code, unreachable host, blocked URL,
+  checksum mismatch) and the dialog shows a matching message.
 
 ### Dependencies
 - dompurify 3.4.2 to 3.4.11

@@ -512,6 +512,21 @@ function showDialog(currentPath) {
 			return (bytes / Math.pow(1024, i)).toFixed(1) + ' ' + units[i]
 		}
 
+		function failureMessage(outcome) {
+			switch (outcome.result) {
+			case 'http_error':
+				return t('transfer', 'The download failed. The remote server responded with status {statusCode}.', { statusCode: outcome.httpStatus })
+			case 'connect_error':
+				return t('transfer', 'The download failed. The remote server could not be reached.')
+			case 'blocked':
+				return t('transfer', 'The URL is not allowed by this server\'s security settings.')
+			case 'hash_mismatch':
+				return t('transfer', 'The checksum did not match. The file was discarded.')
+			default:
+				return t('transfer', 'Transfer failed.')
+			}
+		}
+
 		function updateDefaults() {
 			const parsed = parseFilename(urlInput.value)
 			if (!filenameEdited) {
@@ -606,8 +621,8 @@ function showDialog(currentPath) {
 							hash: hashInput.value,
 						},
 					)
-				} catch (error) {
-					notify(t('transfer', 'Transfer failed.'))
+				} catch {
+					notify(t('transfer', 'The transfer could not be started.'))
 					submitBtn.disabled = false
 					cancelBtn.disabled = false
 					return
@@ -644,30 +659,36 @@ function showDialog(currentPath) {
 					} catch { /* ignore polling errors */ }
 				}, 2000)
 
-				// Step 2: Start — blocks until download completes
+				// Step 2: Start — blocks until download completes and
+				// reports the outcome (always 200; the outcome is data)
 				try {
 					const startResp = await axios.post(
 						generateFilePath('transfer', 'ajax', 'start.php'),
 						{ transferId },
 					)
-					// Cancelled, from this dialog or from the settings page:
-					// back to the form with everything still filled in
-					if (startResp.data && startResp.data.result === 'cancelled') {
+					const outcome = startResp.data || {}
+					switch (outcome.result) {
+					case 'success':
+						if (progressTimer) clearInterval(progressTimer)
+						transferId = null
+						notify(t('transfer', 'The file has been transferred successfully.'))
+						close()
+						break
+					case 'cancelled':
+						// From this dialog or from the settings page: back to
+						// the form with everything still filled in
 						returnToForm()
-						return
+						break
+					default:
+						returnToForm()
+						notify(failureMessage(outcome))
 					}
-					if (progressTimer) clearInterval(progressTimer)
-					transferId = null
-					notify(t('transfer', 'The file has been transferred successfully.'))
-					close()
-				} catch (error) {
+				} catch {
+					// The request to our own server failed (not the download)
 					const cancelled = userCancelled
-					const msg = (error.response && error.response.status)
-						? t('transfer', 'Transfer failed. The server responded with status code {statusCode}.', { statusCode: error.response.status })
-						: t('transfer', 'Transfer failed.')
 					returnToForm()
 					if (!cancelled) {
-						notify(msg)
+						notify(t('transfer', 'Transfer failed.'))
 					}
 				}
 			} else {
@@ -684,11 +705,8 @@ function showDialog(currentPath) {
 					)
 					notify(t('transfer', 'The transfer is queued and will begin processing soon.'))
 					close()
-				} catch (error) {
-					const msg = (error.response && error.response.status)
-						? t('transfer', 'Transfer failed. The server responded with status code {statusCode}.', { statusCode: error.response.status })
-						: t('transfer', 'Transfer failed.')
-					notify(msg)
+				} catch {
+					notify(t('transfer', 'The transfer could not be queued.'))
 					submitBtn.disabled = false
 					cancelBtn.disabled = false
 				}

@@ -164,15 +164,14 @@ class TransferController extends Controller {
 
 		$cache->remove('prepared:' . $transferId);
 
-		$result = $this->service->transfer(
+		// Always 200: the endpoint did its job. What became of the download
+		// (remote 404, connection failure, checksum mismatch, cancellation)
+		// is the outcome it reports, not an error of this server.
+		$outcome = $this->service->transfer(
 			$params['userId'], $params['path'], $params['url'],
 			$params['hashAlgo'], $params['hash'], $transferId
 		);
-		// Cancellation is a deliberate client action, not a server error
-		$status = $result === TransferService::RESULT_FAILED
-			? Http::STATUS_INTERNAL_SERVER_ERROR
-			: Http::STATUS_OK;
-		return new DataResponse(['result' => $result], $status);
+		return new DataResponse($outcome, Http::STATUS_OK);
 	}
 
 	/**

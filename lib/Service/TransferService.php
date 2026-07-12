@@ -1,6 +1,9 @@
 <?php
 namespace OCA\Transfer\Service;
 
+use GuzzleHttp\Exception\BadResponseException;
+use GuzzleHttp\Exception\ConnectException;
+
 use OCA\Transfer\Activity\Providers\TransferFailedProvider;
 use OCA\Transfer\Activity\Providers\TransferStartedProvider;
 use OCA\Transfer\Activity\Providers\TransferSucceededProvider;
@@ -16,8 +19,12 @@ use OCP\ITempManager;
 
 class TransferService {
 	public const RESULT_SUCCESS = 'success';
-	public const RESULT_FAILED = 'failed';
 	public const RESULT_CANCELLED = 'cancelled';
+	public const RESULT_BLOCKED = 'blocked';
+	public const RESULT_HTTP_ERROR = 'http_error';
+	public const RESULT_CONNECT_ERROR = 'connect_error';
+	public const RESULT_HASH_MISMATCH = 'hash_mismatch';
+	public const RESULT_FAILED = 'failed';
 
 	protected $activityManager;
 	protected $clientService;
@@ -47,7 +54,8 @@ class TransferService {
 	}
 
 	/**
-	 * @return string One of the RESULT_* constants.
+	 * @return array ['result' => one of the RESULT_* constants,
+	 *                'httpStatus' => int, only for RESULT_HTTP_ERROR]
 	 */
 	public function transfer(string $userId, string $path, string $url, string $hashAlgo, string $hash, string $transferId) {
 		$hash = strtolower(trim($hash));
@@ -129,14 +137,25 @@ class TransferService {
 			@unlink($tmpPath);
 			if ($cancelled) {
 				$this->generateFailedEvent($userId, $path, $url);
-				return self::RESULT_CANCELLED;
+				return ['result' => self::RESULT_CANCELLED];
 			}
 			if ($exception instanceof LocalServerException) {
 				$this->generateBlockedEvent($userId, $path, $url);
-			} else {
-				$this->generateFailedEvent($userId, $path, $url);
+				return ['result' => self::RESULT_BLOCKED];
 			}
-			return self::RESULT_FAILED;
+			$this->generateFailedEvent($userId, $path, $url);
+			// The remote site answering with an error is a normal outcome,
+			// not a fault of this server. Report what happened.
+			if ($exception instanceof BadResponseException) {
+				return [
+					'result' => self::RESULT_HTTP_ERROR,
+					'httpStatus' => $exception->getResponse()->getStatusCode(),
+				];
+			}
+			if ($exception instanceof ConnectException) {
+				return ['result' => self::RESULT_CONNECT_ERROR];
+			}
+			return ['result' => self::RESULT_FAILED];
 		}
 
 		if ($cache) $this->removeTransfer($cache, $userId, $transferId);
@@ -150,7 +169,7 @@ class TransferService {
 			} catch (NotFoundException $e) {
 				unlink($tmpPath);
 				$this->generateFailedEvent($userId, $path, $url);
-				return self::RESULT_FAILED;
+				return ['result' => self::RESULT_FAILED];
 			}
 
 			// Retry loop in case of concurrent writes with the same filename
@@ -172,7 +191,7 @@ class TransferService {
 					if ($attempt === 4) {
 						unlink($tmpPath);
 						$this->generateFailedEvent($userId, $path, $url);
-						return self::RESULT_FAILED;
+						return ['result' => self::RESULT_FAILED];
 					}
 					usleep(100000); // 100ms before retry
 				}
@@ -181,12 +200,12 @@ class TransferService {
 
 			$actualPath = $dirPath . '/' . $uniqueName;
 			$this->generateSucceededEvent($userId, $actualPath, $url, $file->getId());
-			return self::RESULT_SUCCESS;
+			return ['result' => self::RESULT_SUCCESS];
 		} else {
 			unlink($tmpPath);
 
 			$this->generateHashFailedEvent($userId, $path, $url);
-			return self::RESULT_FAILED;
+			return ['result' => self::RESULT_HASH_MISMATCH];
 		}
 	}
 
