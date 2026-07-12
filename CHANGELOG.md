@@ -27,6 +27,7 @@ feature set for 1.0.
   queue still works without it.
 
 ### Changed
+- Nextcloud 34 is now supported. The compatibility range is 29 to 34.
 - Hardened `TransferService`: per-transfer IDs, stall detection that aborts a
   transfer after 120 seconds without data, consolidated exception handling
   that always cleans up the temp file, and a retry loop for concurrent writes of

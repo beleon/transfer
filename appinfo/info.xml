@@ -20,7 +20,7 @@
 	<bugs>https://github.com/beleon/transfer/issues</bugs>
 	<screenshot small-thumbnail="https://raw.githubusercontent.com/beleon/transfer/master/img/prompt.png">https://raw.githubusercontent.com/beleon/transfer/master/img/prompt.png</screenshot>
 	<dependencies>
-		<nextcloud min-version="29" max-version="33"/>
+		<nextcloud min-version="29" max-version="34"/>
 	</dependencies>
 	<settings>
 		<personal-section>OCA\Transfer\Settings\TransferSection</personal-section>
