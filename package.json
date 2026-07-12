@@ -35,6 +35,6 @@
   "devDependencies": {
     "@nextcloud/browserslist-config": "^3.0.1",
     "@nextcloud/vite-config": "^1.5.2",
-    "vite": "^7.1.10"
+    "vite": "^7.3.5"
   }
 }
