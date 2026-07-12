@@ -41,6 +41,10 @@ feature set for 1.0.
   the dialog stuck on "Starting" because of this.
 - Cancelling an immediate transfer, from the dialog or from the settings page,
   returns the dialog to the form with all fields kept instead of closing it.
+- The success activity event showed as malformed on Nextcloud 34, which
+  requires rich object ids to be strings.
+- A hostname that does not resolve is reported as unreachable instead of
+  claiming the URL is blocked by security settings.
 - A failing download no longer produces a 500 on the Nextcloud server. The
   remote site returning an error is a normal outcome: the start endpoint now
   reports what happened (remote status code, unreachable host, blocked URL,

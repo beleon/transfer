@@ -140,6 +140,15 @@ class TransferService {
 				return ['result' => self::RESULT_CANCELLED];
 			}
 			if ($exception instanceof LocalServerException) {
+				// Nextcloud also throws this when the hostname does not
+				// resolve, since it cannot rule out a local target then.
+				// Report that as unreachable rather than blocked.
+				$host = parse_url($url, PHP_URL_HOST);
+				if (is_string($host) && !filter_var($host, FILTER_VALIDATE_IP)
+					&& gethostbyname($host) === $host) {
+					$this->generateFailedEvent($userId, $path, $url);
+					return ['result' => self::RESULT_CONNECT_ERROR];
+				}
 				$this->generateBlockedEvent($userId, $path, $url);
 				return ['result' => self::RESULT_BLOCKED];
 			}

@@ -33,7 +33,8 @@ class TransferSucceededProvider extends BaseProvider {
         if (!$this->activityManager->isFormattingFilteredObject()) {
             $parameters["file"] = [
                 "type" => "file",
-                "id" => $event->getObjectId(),
+                // Rich object ids must be strings (enforced since NC 34)
+                "id" => (string)$event->getObjectId(),
                 "name" => basename($event->getObjectName()),
                 "path" => trim($event->getObjectName(), "/"),
                 "link" => $this->urlGenerator->linkToRouteAbsolute(
