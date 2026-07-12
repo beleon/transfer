@@ -164,11 +164,15 @@ class TransferController extends Controller {
 
 		$cache->remove('prepared:' . $transferId);
 
-		$success = $this->service->transfer(
+		$result = $this->service->transfer(
 			$params['userId'], $params['path'], $params['url'],
 			$params['hashAlgo'], $params['hash'], $transferId
 		);
-		return new DataResponse($success, $success ? Http::STATUS_OK : Http::STATUS_INTERNAL_SERVER_ERROR);
+		// Cancellation is a deliberate client action, not a server error
+		$status = $result === TransferService::RESULT_FAILED
+			? Http::STATUS_INTERNAL_SERVER_ERROR
+			: Http::STATUS_OK;
+		return new DataResponse(['result' => $result], $status);
 	}
 
 	/**

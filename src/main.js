@@ -224,6 +224,28 @@ const STYLES = `
 	height: 20px;
 	fill: currentColor;
 }
+#transfer-toasts {
+	position: fixed;
+	top: 10px;
+	left: 50%;
+	transform: translateX(-50%);
+	z-index: 10200;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	gap: 6px;
+	pointer-events: none;
+}
+.transfer-toast {
+	background: var(--color-main-background, #fff);
+	color: var(--color-main-text, #222);
+	border: 1px solid var(--color-border, #ccc);
+	border-radius: var(--border-radius-pill, 20px);
+	box-shadow: 0 2px 8px rgba(0, 0, 0, 0.25);
+	padding: 8px 16px;
+	font-size: 0.9em;
+	max-width: 80vw;
+}
 `
 
 function injectStyles() {
@@ -232,6 +254,29 @@ function injectStyles() {
 	style.id = 'transfer-styles'
 	style.textContent = STYLES
 	document.head.appendChild(style)
+}
+
+/**
+ * Show a temporary toast. OC.Notification is deprecated and no longer
+ * exists on newer Nextcloud versions, so fall back to our own toast.
+ */
+function notify(message) {
+	if (window.OC && window.OC.Notification && window.OC.Notification.showTemporary) {
+		window.OC.Notification.showTemporary(message)
+		return
+	}
+	injectStyles()
+	let region = document.getElementById('transfer-toasts')
+	if (!region) {
+		region = document.createElement('div')
+		region.id = 'transfer-toasts'
+		document.body.appendChild(region)
+	}
+	const toast = document.createElement('div')
+	toast.className = 'transfer-toast'
+	toast.textContent = message
+	region.appendChild(toast)
+	setTimeout(() => toast.remove(), 7000)
 }
 
 /**
@@ -442,6 +487,24 @@ function showDialog(currentPath) {
 			return downloadingSection.style.display !== 'none'
 		}
 
+		// Switch back to the form view, keeping all field values intact
+		function returnToForm() {
+			if (progressTimer) {
+				clearInterval(progressTimer)
+				progressTimer = null
+			}
+			transferId = null
+			userCancelled = false
+			downloadingSection.style.display = 'none'
+			formSection.style.display = 'block'
+			progressFill.style.width = '0%'
+			progressText.textContent = t('transfer', 'Starting…')
+			dlCancelBtn.disabled = false
+			dlCancelBtn.textContent = t('transfer', 'Cancel')
+			cancelBtn.disabled = false
+			updateValidity()
+		}
+
 		function formatBytes(bytes) {
 			if (bytes === 0) return '0 B'
 			const units = ['B', 'KB', 'MB', 'GB', 'TB']
@@ -503,9 +566,16 @@ function showDialog(currentPath) {
 		}
 
 		cancelBtn.addEventListener('click', close)
-		dlCancelBtn.addEventListener('click', close)
-		// While a transfer is running, only the explicit Cancel button closes
-		// the dialog. Escape or a stray click outside must not kill it.
+		// Cancelling a running transfer keeps the dialog open: the pending
+		// start request resolves as cancelled and returnToForm takes over,
+		// with all fields still filled in.
+		dlCancelBtn.addEventListener('click', () => {
+			dlCancelBtn.disabled = true
+			dlCancelBtn.textContent = t('transfer', 'Cancelling…')
+			cancelTransfer()
+		})
+		// While a transfer is running, only the explicit Cancel button acts
+		// on the dialog. Escape or a stray click outside must not kill it.
 		overlay.addEventListener('click', (e) => { if (e.target === overlay && !isDownloading()) close() })
 
 		function onKey(e) {
@@ -537,8 +607,7 @@ function showDialog(currentPath) {
 						},
 					)
 				} catch (error) {
-					// eslint-disable-next-line no-undef
-					OC.Notification.showTemporary(t('transfer', 'Transfer failed.'))
+					notify(t('transfer', 'Transfer failed.'))
 					submitBtn.disabled = false
 					cancelBtn.disabled = false
 					return
@@ -577,34 +646,29 @@ function showDialog(currentPath) {
 
 				// Step 2: Start — blocks until download completes
 				try {
-					await axios.post(
+					const startResp = await axios.post(
 						generateFilePath('transfer', 'ajax', 'start.php'),
 						{ transferId },
 					)
-					if (progressTimer) clearInterval(progressTimer)
-					transferId = null
-					// eslint-disable-next-line no-undef
-					OC.Notification.showTemporary(t('transfer', 'The file has been transferred successfully.'))
-					close()
-				} catch (error) {
-					if (progressTimer) clearInterval(progressTimer)
-					transferId = null
-					// The user cancelled: the dialog is already gone and the
-					// rejected start request is expected, not a failure.
-					if (userCancelled) {
+					// Cancelled, from this dialog or from the settings page:
+					// back to the form with everything still filled in
+					if (startResp.data && startResp.data.result === 'cancelled') {
+						returnToForm()
 						return
 					}
+					if (progressTimer) clearInterval(progressTimer)
+					transferId = null
+					notify(t('transfer', 'The file has been transferred successfully.'))
+					close()
+				} catch (error) {
+					const cancelled = userCancelled
 					const msg = (error.response && error.response.status)
 						? t('transfer', 'Transfer failed. The server responded with status code {statusCode}.', { statusCode: error.response.status })
 						: t('transfer', 'Transfer failed.')
-					// eslint-disable-next-line no-undef
-					OC.Notification.showTemporary(msg)
-					downloadingSection.style.display = 'none'
-					formSection.style.display = 'block'
-					progressFill.style.width = '0%'
-					submitBtn.innerHTML = `${CLOUD_UPLOAD_SVG} ${t('transfer', 'Upload')}`
-					submitBtn.disabled = false
-					cancelBtn.disabled = false
+					returnToForm()
+					if (!cancelled) {
+						notify(msg)
+					}
 				}
 			} else {
 				// Background queue
@@ -618,15 +682,13 @@ function showDialog(currentPath) {
 							hash: hashInput.value,
 						},
 					)
-					// eslint-disable-next-line no-undef
-					OC.Notification.showTemporary(t('transfer', 'The transfer is queued and will begin processing soon.'))
+					notify(t('transfer', 'The transfer is queued and will begin processing soon.'))
 					close()
 				} catch (error) {
 					const msg = (error.response && error.response.status)
 						? t('transfer', 'Transfer failed. The server responded with status code {statusCode}.', { statusCode: error.response.status })
 						: t('transfer', 'Transfer failed.')
-					// eslint-disable-next-line no-undef
-					OC.Notification.showTemporary(msg)
+					notify(msg)
 					submitBtn.disabled = false
 					cancelBtn.disabled = false
 				}

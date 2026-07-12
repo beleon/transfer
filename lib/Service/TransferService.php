@@ -15,6 +15,10 @@ use OCP\IConfig;
 use OCP\ITempManager;
 
 class TransferService {
+	public const RESULT_SUCCESS = 'success';
+	public const RESULT_FAILED = 'failed';
+	public const RESULT_CANCELLED = 'cancelled';
+
 	protected $activityManager;
 	protected $clientService;
 	protected $rootFolder;
@@ -43,7 +47,7 @@ class TransferService {
 	}
 
 	/**
-	 * @return Whether the transfer succeeded.
+	 * @return string One of the RESULT_* constants.
 	 */
 	public function transfer(string $userId, string $path, string $url, string $hashAlgo, string $hash, string $transferId) {
 		$hash = strtolower(trim($hash));
@@ -125,14 +129,14 @@ class TransferService {
 			@unlink($tmpPath);
 			if ($cancelled) {
 				$this->generateFailedEvent($userId, $path, $url);
-				return false;
+				return self::RESULT_CANCELLED;
 			}
 			if ($exception instanceof LocalServerException) {
 				$this->generateBlockedEvent($userId, $path, $url);
 			} else {
 				$this->generateFailedEvent($userId, $path, $url);
 			}
-			return false;
+			return self::RESULT_FAILED;
 		}
 
 		if ($cache) $this->removeTransfer($cache, $userId, $transferId);
@@ -146,7 +150,7 @@ class TransferService {
 			} catch (NotFoundException $e) {
 				unlink($tmpPath);
 				$this->generateFailedEvent($userId, $path, $url);
-				return false;
+				return self::RESULT_FAILED;
 			}
 
 			// Retry loop in case of concurrent writes with the same filename
@@ -168,7 +172,7 @@ class TransferService {
 					if ($attempt === 4) {
 						unlink($tmpPath);
 						$this->generateFailedEvent($userId, $path, $url);
-						return false;
+						return self::RESULT_FAILED;
 					}
 					usleep(100000); // 100ms before retry
 				}
@@ -177,12 +181,12 @@ class TransferService {
 
 			$actualPath = $dirPath . '/' . $uniqueName;
 			$this->generateSucceededEvent($userId, $actualPath, $url, $file->getId());
-			return true;
+			return self::RESULT_SUCCESS;
 		} else {
 			unlink($tmpPath);
 
 			$this->generateHashFailedEvent($userId, $path, $url);
-			return false;
+			return self::RESULT_FAILED;
 		}
 	}
 
