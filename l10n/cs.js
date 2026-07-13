@@ -20,6 +20,6 @@ OC.L10N.register(
     "Checksum" : "Kontrolní součet",
     "Cancel" : "Zrušit",
     "Upload" : "Nahrát",
-    "Failed to add the upload to the queue. The server responded with status code {statusCode}." : "Nahrání se nepodařilo přidat do fronty. Server odpověděl se stavovým kódem {statusCode}."
+    "Starting…" : "Spouštění …"
 },
 "nplurals=4; plural=(n == 1 && n % 1 == 0) ? 0 : (n >= 2 && n <= 4 && n % 1 == 0) ? 1: (n % 1 != 0 ) ? 2 : 3;");

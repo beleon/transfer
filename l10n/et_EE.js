@@ -17,13 +17,10 @@ OC.L10N.register(
     "\"Upload by link\" functionality for Nextcloud. Transfer files\n                using the full bandwidth available to your server. Avoid the need to\n                leave your own device online to finish an upload." : "Veebilingi alusel Nextcloudi üleslaadimise võimalus.\nFailiedastus toimub kogu serveri kasutatava üleslaadimiskiirusega.\nVäldid vajadust hoida oma seadet kogu üleslaadimise ajal selle lõpetamiseks sees.",
     "Link" : "Link",
     "File name" : "Failinimi",
-    "Some websites provide a checksum in addition to the file. This is used after the transfer to verify that the file is not corrupted." : "Mõnedes veebisaitides leidub lisaks failile ka kontrollsumma. Seda kasutatakse peale faili edastamist selle õigsuse kontrollimiseks.",
     "Algorithm" : "Algoritm",
     "Checksum" : "Kontrollsumma",
     "Cancel" : "Katkesta",
     "Upload" : "Laadi üles",
-    "The upload is queued and will begin processing soon." : "Üleslaadimine on lisatud järjekorda ja töötlemine algab õige pea.",
-    "Failed to add the upload to the queue. The server responded with status code {statusCode}." : "Üleslaadimise järjekorda lisamine ei õnnestunud. Serveri vastuse kood oli {statusCode}.",
-    "Failed to add the upload to the queue." : "Üleslaadimise lisamine tööde järjekorda ei õnnestunud."
+    "Starting…" : "Alustan…"
 },
 "nplurals=2; plural=(n != 1);");

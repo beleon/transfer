@@ -9,6 +9,7 @@ OC.L10N.register(
     "File name" : "ファイル名",
     "Checksum" : "チェックサム",
     "Cancel" : "キャンセル",
-    "Upload" : "アップロード"
+    "Upload" : "アップロード",
+    "Starting…" : "開始中..."
 },
 "nplurals=1; plural=0;");

@@ -12,7 +12,6 @@ OC.L10N.register(
     "File name" : "Nome del ficheru",
     "Checksum" : "Suma de comprobación",
     "Cancel" : "Cancel",
-    "Upload" : "Xunir",
-    "The upload is queued and will begin processing soon." : "La xuba ta na cola y va procesase pronto."
+    "Upload" : "Xunir"
 },
 "nplurals=2; plural=(n != 1);");

@@ -17,13 +17,10 @@ OC.L10N.register(
     "\"Upload by link\" functionality for Nextcloud. Transfer files\n                using the full bandwidth available to your server. Avoid the need to\n                leave your own device online to finish an upload." : "Nextcloud için \"Bağlantı ile yükleme\" özelliği. Sunucunuzun\n                kullanabileceği tam bant genişliğini kullanarak dosyaları aktarır. Yükleme işlemini\n                tamamlamak için kendi aygıtınızı çevrim içi tutma gerekliliğini ortadan kaldırın.",
     "Link" : "Bağlantı",
     "File name" : "Dosya adı",
-    "Some websites provide a checksum in addition to the file. This is used after the transfer to verify that the file is not corrupted." : "Bazı siteler dosyaya ek olarak bir sağlama değeri verir. Bu değer, aktarımdan sonra dosyanın bozulmadığını doğrulamak için kullanılır.",
     "Algorithm" : "Algoritma",
     "Checksum" : "Sağlama",
     "Cancel" : "İptal",
     "Upload" : "Yükle",
-    "The upload is queued and will begin processing soon." : "Yükleme sıraya alındı ve yakında işlenecek.",
-    "Failed to add the upload to the queue. The server responded with status code {statusCode}." : "Yükleme sıraya alınamadı. Sunucu {statusCode} durum koduyla yanıt verdi.",
-    "Failed to add the upload to the queue." : "Yükleme sıraya alınamadı."
+    "Starting…" : "Başlatılıyor…"
 },
 "nplurals=2; plural=(n > 1);");

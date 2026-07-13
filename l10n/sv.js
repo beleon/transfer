@@ -8,6 +8,7 @@ OC.L10N.register(
     "Algorithm" : "Algoritm",
     "Checksum" : "Checksumma",
     "Cancel" : "Avbryt",
-    "Upload" : "Ladda upp"
+    "Upload" : "Ladda upp",
+    "Starting…" : "Startar..."
 },
 "nplurals=2; plural=(n != 1);");

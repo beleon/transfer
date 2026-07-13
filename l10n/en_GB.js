@@ -16,13 +16,10 @@ OC.L10N.register(
     "Add a file to Nextcloud from a web link." : "Add a file to Nextcloud from a web link.",
     "Link" : "Link",
     "File name" : "File name",
-    "Some websites provide a checksum in addition to the file. This is used after the transfer to verify that the file is not corrupted." : "Some websites provide a checksum in addition to the file. This is used after the transfer to verify that the file is not corrupted.",
     "Algorithm" : "Algorithm",
     "Checksum" : "Checksum",
     "Cancel" : "Cancel",
     "Upload" : "Upload",
-    "The upload is queued and will begin processing soon." : "The upload is queued and will begin processing soon.",
-    "Failed to add the upload to the queue. The server responded with status code {statusCode}." : "Failed to add the upload to the queue. The server responded with status code {statusCode}.",
-    "Failed to add the upload to the queue." : "Failed to add the upload to the queue."
+    "Starting…" : "Starting…"
 },
 "nplurals=2; plural=(n != 1);");

@@ -17,13 +17,10 @@ OC.L10N.register(
     "\"Upload by link\" functionality for Nextcloud. Transfer files\n                using the full bandwidth available to your server. Avoid the need to\n                leave your own device online to finish an upload." : "\"Hochladen per Link\"-Funktion für Nextcloud. Übertragen Sie Dateien\n            unter Verwendung der vollen verfügbaren Bandbreite Ihres Servers. \n            Sie müssen mit dieser Funktion Ihr eignes Gerät nicht online lassen, um einen Upload abzuschließen.",
     "Link" : "Link",
     "File name" : "Dateiname",
-    "Some websites provide a checksum in addition to the file. This is used after the transfer to verify that the file is not corrupted." : "Einige Webseiten bieten zusätzlich zur Datei eine Prüfsumme an. Diese wird nach dem Transfer verwendet, um zu überprüfen, ob die Datei unbeschädigt ist.",
     "Algorithm" : "Algorithmus",
     "Checksum" : "Prüfsumme",
     "Cancel" : "Abbrechen",
     "Upload" : "Hochladen",
-    "The upload is queued and will begin processing soon." : "Die Upload ist in der Warteschlange und wird bald verarbeitet werden.",
-    "Failed to add the upload to the queue. The server responded with status code {statusCode}." : "Fehler beim Hinzufügen des Uploads zur Warteschlange. Der Server hat mit dem Statuscode {statusCode} geantwortet.",
-    "Failed to add the upload to the queue." : "Fehler beim Hinzufügen des Uploads zur Warteschlange."
+    "Starting…" : "Starte …"
 },
 "nplurals=2; plural=(n != 1);");

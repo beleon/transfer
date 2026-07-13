@@ -16,12 +16,8 @@ OC.L10N.register(
     "Add a file to Nextcloud from a web link." : "Legg en fil til Nextcloud fra en web lenke.",
     "Link" : "Lenke",
     "File name" : "Filnavn",
-    "Some websites provide a checksum in addition to the file. This is used after the transfer to verify that the file is not corrupted." : "Noen nettsteder gir en sjekksum i tillegg til filen. Dette brukes etter overføringen for å bekrefte at filen ikke er skadet.",
     "Checksum" : "Sjekksum",
     "Cancel" : "Cancel",
-    "Upload" : "Last opp",
-    "The upload is queued and will begin processing soon." : "Opplastingen legges i kø og behandles snart.",
-    "Failed to add the upload to the queue. The server responded with status code {statusCode}." : "Kan ikke legge til opplastingen i køen. Serveren svarte med statuskoden {statusCode}.",
-    "Failed to add the upload to the queue." : "Kunne ikke legge til opplastingen i køen."
+    "Upload" : "Last opp"
 },
 "nplurals=2; plural=(n != 1);");

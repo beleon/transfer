@@ -15,13 +15,10 @@
     "\"Upload by link\" functionality for Nextcloud. Transfer files\n                using the full bandwidth available to your server. Avoid the need to\n                leave your own device online to finish an upload." : "„Nextcloud“ funkcija „Įkelti naudojant nuorodą“. Perkelkite failus\nnaudodami visą serverio pralaidumą. Išvengsite poreikio\npalikti savo įrenginį prijungtą prie interneto, kad užbaigtumėte failo įkėlimą.",
     "Link" : "Nuoroda",
     "File name" : "Failo pavadinimas",
-    "Some websites provide a checksum in addition to the file. This is used after the transfer to verify that the file is not corrupted." : "Kai kurios svetainės kartu su failu pateikia kontrolinę sumą. Ji naudojama po perkėlimo, siekiant patikrinti, ar failas nėra sugadintas.",
     "Algorithm" : "Algoritmas",
     "Checksum" : "Kontrolinė suma",
     "Cancel" : "Atsisakyti",
     "Upload" : "Įkelti",
-    "The upload is queued and will begin processing soon." : "Įkėlimas yra eilėje ir netrukus bus pradėtas apdoroti.",
-    "Failed to add the upload to the queue. The server responded with status code {statusCode}." : "Nepavyko pridėti įkėlimo prie eilės. Serveris atsakė būsenos kodu {statusCode}.",
-    "Failed to add the upload to the queue." : "Nepavyko pridėti įkėlimo į eilę."
+    "Starting…" : "Pradedama…"
 },"pluralForm" :"nplurals=4; plural=(n % 10 == 1 && (n % 100 > 19 || n % 100 < 11) ? 0 : (n % 10 >= 2 && n % 10 <=9) && (n % 100 > 19 || n % 100 < 11) ? 1 : n % 1 != 0 ? 2: 3);"
 }

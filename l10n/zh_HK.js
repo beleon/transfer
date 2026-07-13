@@ -16,13 +16,10 @@ OC.L10N.register(
     "Add a file to Nextcloud from a web link." : "從 Web 連結將檔案添加到 Nextcloud。",
     "Link" : "連結",
     "File name" : "檔案名稱",
-    "Some websites provide a checksum in addition to the file. This is used after the transfer to verify that the file is not corrupted." : "有些網站除了檔案以外也提供檢查碼。這是在轉移後用於驗證檔案未損毀。",
     "Algorithm" : "演算法",
     "Checksum" : "校驗和",
     "Cancel" : "取消",
     "Upload" : "上傳",
-    "The upload is queued and will begin processing soon." : "上傳已排入佇列，很快就會開始處理。",
-    "Failed to add the upload to the queue. The server responded with status code {statusCode}." : "無法將上傳新增至佇列。伺服器以狀態碼 {statusCode} 回應。",
-    "Failed to add the upload to the queue." : "無法將上傳新增至佇列。"
+    "Starting…" : "正在開始 …"
 },
 "nplurals=1; plural=0;");

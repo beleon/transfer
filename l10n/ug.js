@@ -8,6 +8,7 @@ OC.L10N.register(
     "Algorithm" : "ئالگورىزىم",
     "Checksum" : "تەكشۈرۈش يىغىندىسى",
     "Cancel" : "ۋاز كەچ",
-    "Upload" : "يۈكلەش"
+    "Upload" : "يۈكلەش",
+    "Starting…" : "باشلىنىۋاتىدۇ…"
 },
 "nplurals=2; plural=(n != 1);");

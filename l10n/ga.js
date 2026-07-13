@@ -17,13 +17,10 @@ OC.L10N.register(
     "\"Upload by link\" functionality for Nextcloud. Transfer files\n                using the full bandwidth available to your server. Avoid the need to\n                leave your own device online to finish an upload." : "Feidhmiúlacht \"Uaslódáil trí nasc\" do Nextcloud. Aistrigh comhaid\n ag baint úsáide as an bandaleithead iomlán atá ar fáil do do fhreastalaí. Seachain an gá do\n ghléas féin a fhágáil ar líne chun uaslódáil a chríochnú.",
     "Link" : "Nasc",
     "File name" : "Ainm comhaid",
-    "Some websites provide a checksum in addition to the file. This is used after the transfer to verify that the file is not corrupted." : "Soláthraíonn roinnt suíomhanna gréasáin seiceam chomh maith leis an gcomhad. Úsáidtear é seo tar éis an aistrithe chun a fhíorú nach bhfuil an comhad truaillithe.",
     "Algorithm" : "Algartam",
     "Checksum" : "Seiceam",
     "Cancel" : "Cealaigh",
     "Upload" : "Uaslódáil",
-    "The upload is queued and will begin processing soon." : "Tá an t-uaslódáil i scuaine agus cuirfear tús leis an bpróiseáil go luath.",
-    "Failed to add the upload to the queue. The server responded with status code {statusCode}." : "Theip ar an uaslódáil a chur leis an scuaine. D'fhreagair an freastalaí le cód stádais {statusCode}.",
-    "Failed to add the upload to the queue." : "Theip ar an uaslódáil a chur leis an scuaine."
+    "Starting…" : "Ag tosú…"
 },
 "nplurals=5; plural=(n==1 ? 0 : n==2 ? 1 : n<7 ? 2 : n<11 ? 3 : 4);");

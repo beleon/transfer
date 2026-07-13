@@ -18,6 +18,6 @@ OC.L10N.register(
     "Checksum" : "Tarkistussumma",
     "Cancel" : "Peruuta",
     "Upload" : "Lähetä",
-    "The upload is queued and will begin processing soon." : "Lähetys on asetettu jonoon ja sen käsittely aloitetaan pian."
+    "Starting…" : "Aloitetaan…"
 },
 "nplurals=2; plural=(n != 1);");

@@ -17,13 +17,10 @@ OC.L10N.register(
     "\"Upload by link\" functionality for Nextcloud. Transfer files\n                using the full bandwidth available to your server. Avoid the need to\n                leave your own device online to finish an upload." : "قابلیت «بارگذاری از طریق پیوند» برای نکست‌کلود. فایل‌ها را با استفاده از پهنای باند کامل سرور خود انتقال دهید. نیازی به روشن نگه داشتن دستگاه خود برای تکمیل بارگذاری نیست.",
     "Link" : "پیوند",
     "File name" : "نام فایل",
-    "Some websites provide a checksum in addition to the file. This is used after the transfer to verify that the file is not corrupted." : "برخی وب‌سایت‌ها علاوه بر فایل، یک چکسام نیز ارائه می‌دهند. این چکسام پس از انتقال برای تأیید عدم خرابی فایل استفاده می‌شود.",
     "Algorithm" : "الگوریتم",
     "Checksum" : "چکسام",
     "Cancel" : "لغو",
     "Upload" : "بارگذاری",
-    "The upload is queued and will begin processing soon." : "بارگذاری در صف قرار گرفته و به زودی پردازش آغاز می‌شود.",
-    "Failed to add the upload to the queue. The server responded with status code {statusCode}." : "افزودن بارگذاری به صف ناموفق بود. سرور با کد وضعیت {statusCode} پاسخ داد.",
-    "Failed to add the upload to the queue." : "افزودن بارگذاری به صف ناموفق بود."
+    "Starting…" : "در حال شروع…"
 },
 "nplurals=2; plural=(n > 1);");

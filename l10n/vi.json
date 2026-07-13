@@ -14,12 +14,8 @@
     "Add a file to Nextcloud from a web link." : "Thêm tệp vào Nextcloud từ liên kết web.",
     "Link" : "Liên kết",
     "File name" : "Tên tệp tin",
-    "Some websites provide a checksum in addition to the file. This is used after the transfer to verify that the file is not corrupted." : "Một số trang web cung cấp tổng kiểm tra ngoài tệp. Điều này được sử dụng sau khi chuyển để xác minh rằng tệp không bị hỏng.",
     "Checksum" : "Giá trị tổng kiểm",
     "Cancel" : "Cancel",
-    "Upload" : "Tải lên",
-    "The upload is queued and will begin processing soon." : "Tải lên được xếp hàng đợi và sẽ sớm bắt đầu xử lý.",
-    "Failed to add the upload to the queue. The server responded with status code {statusCode}." : "Không thể thêm tải lên vào hàng đợi. Máy chủ phản hồi bằng mã trạng thái\n {statusCode}.",
-    "Failed to add the upload to the queue." : "Không thể thêm tải lên vào hàng chờ."
+    "Upload" : "Tải lên"
 },"pluralForm" :"nplurals=1; plural=0;"
 }

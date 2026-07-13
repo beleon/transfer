@@ -16,12 +16,8 @@ OC.L10N.register(
     "Add a file to Nextcloud from a web link." : "إضافة ملف إلى نكست كلاود من رابط وب",
     "Link" : "رابط",
     "File name" : "اسم الملف",
-    "Some websites provide a checksum in addition to the file. This is used after the transfer to verify that the file is not corrupted." : "بعض مواقع الوب تُوفّر \"المجموع الاختباري\" checksum بالإضافة إلى الملف نفسه. هذه الميزة تسمح بالتحقق من أن عملية النقل تمّت بنجاحٍ و بدون التسبب في إتلاف الملف.",
     "Checksum" : "المجموع الاختباري Checksum",
     "Cancel" : "Cancel",
-    "Upload" : "إرفَع",
-    "The upload is queued and will begin processing soon." : "عملية الرفع تمّ وضعها على قائمة الانتظار و سوف تبدأ قريباً.",
-    "Failed to add the upload to the queue. The server responded with status code {statusCode}." : "تعذّرت إضافة عملية الرفع إلى قائمة الانتظار. استجابة الخادوم كانت بالرسالة: {statusCode}.",
-    "Failed to add the upload to the queue." : "تعذّرت إضافة عملية الرفع إلى قائمة الانتظار."
+    "Upload" : "إرفَع"
 },
 "nplurals=6; plural=n==0 ? 0 : n==1 ? 1 : n==2 ? 2 : n%100>=3 && n%100<=10 ? 3 : n%100>=11 && n%100<=99 ? 4 : 5;");

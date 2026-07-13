@@ -7,6 +7,7 @@ OC.L10N.register(
     "File name" : "Nama file",
     "Checksum" : "Checksum",
     "Cancel" : "Batal",
-    "Upload" : "Unggah"
+    "Upload" : "Unggah",
+    "Starting…" : "Memulai…"
 },
 "nplurals=1; plural=0;");

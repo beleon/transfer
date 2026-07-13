@@ -15,6 +15,7 @@ OC.L10N.register(
     "Algorithm" : "Algorithme",
     "Checksum" : "Somme de contrôle",
     "Cancel" : "Annuler",
-    "Upload" : "Téléverser"
+    "Upload" : "Téléverser",
+    "Starting…" : "Démarrage …"
 },
 "nplurals=3; plural=(n == 0 || n == 1) ? 0 : n != 0 && n % 1000000 == 0 ? 1 : 2;");

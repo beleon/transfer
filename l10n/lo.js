@@ -7,6 +7,7 @@ OC.L10N.register(
     "File name" : "ຊື່ຟາຍ",
     "Algorithm" : "Algorithm",
     "Cancel" : "ຍົກເລີກ",
-    "Upload" : "ອັບໂຫລດ"
+    "Upload" : "ອັບໂຫລດ",
+    "Starting…" : "ກຳລັງເລີ່ມ..."
 },
 "nplurals=1; plural=0;");

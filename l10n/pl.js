@@ -9,9 +9,9 @@ OC.L10N.register(
     "Add a file to Nextcloud from a web link." : "Dodaj plik do Nextcloud z linku internetowego.",
     "Link" : "Odnośnik",
     "File name" : "Nazwa pliku",
-    "Some websites provide a checksum in addition to the file. This is used after the transfer to verify that the file is not corrupted." : "Niektóre witryny internetowe oprócz pliku udostępniają sumę kontrolną. Jest to wykorzystywane po przesłaniu w celu sprawdzenia, czy plik nie jest uszkodzony.",
     "Checksum" : "Suma kontrolna",
     "Cancel" : "Anuluj",
-    "Upload" : "Wyślij"
+    "Upload" : "Wyślij",
+    "Starting…" : "Uruchamianie…"
 },
 "nplurals=4; plural=(n==1 ? 0 : (n%10>=2 && n%10<=4) && (n%100<12 || n%100>14) ? 1 : n!=1 && (n%10>=0 && n%10<=1) || (n%10>=5 && n%10<=9) || (n%100>=12 && n%100<=14) ? 2 : 3);");
