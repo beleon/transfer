@@ -4,6 +4,13 @@ All notable changes to this project are documented here. The format is based on
 [Keep a Changelog](https://keepachangelog.com/en/1.1.0/), and this project
 follows [Semantic Versioning](https://semver.org/).
 
+## [Unreleased]
+
+### Fixed
+- URLs containing credentials (https://user:password@host/...) no longer expose
+  them in activity events or on the settings page. The download still uses them,
+  the displayed URL does not.
+
 ## [1.0.0] - 2026-07-12
 
 First stable release. The core functionality is stable and the app is now in

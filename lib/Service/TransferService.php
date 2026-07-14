@@ -54,14 +54,26 @@ class TransferService {
 	}
 
 	/**
+	 * Strip userinfo (user:password@) from a URL. Activity events and the
+	 * progress cache are visible in the UI, so credentials embedded in the
+	 * URL must never reach them. The download itself uses the original URL.
+	 * The match stops at the first /, ? or # so that an @ in the path, query
+	 * or fragment is left alone.
+	 */
+	public static function stripCredentials(string $url): string {
+		return preg_replace('~^([a-z][a-z0-9+.-]*://)[^/?#]*@~i', '$1', $url) ?? $url;
+	}
+
+	/**
 	 * @return array ['result' => one of the RESULT_* constants,
 	 *                'httpStatus' => int, only for RESULT_HTTP_ERROR]
 	 */
 	public function transfer(string $userId, string $path, string $url, string $hashAlgo, string $hash, string $transferId) {
 		$hash = strtolower(trim($hash));
+		$displayUrl = self::stripCredentials($url);
 		$userFolder = $this->rootFolder->getUserFolder($userId);
 
-		$this->generateStartedEvent($userId, $path, $url);
+		$this->generateStartedEvent($userId, $path, $displayUrl);
 
 		$tmpPath = $this->tempManager->getTemporaryFile();
 
@@ -94,7 +106,7 @@ class TransferService {
 			if ($cache) {
 				// Use raw curl progress function — returning non-zero aborts the transfer
 				$options["curl"][CURLOPT_NOPROGRESS] = false;
-				$options["curl"][CURLOPT_PROGRESSFUNCTION] = function ($resource, $downloadTotal, $downloaded, $uploadTotal, $uploaded) use ($cache, $transferId, $path, $url, &$lastUpdate, &$cancelled) {
+				$options["curl"][CURLOPT_PROGRESSFUNCTION] = function ($resource, $downloadTotal, $downloaded, $uploadTotal, $uploaded) use ($cache, $transferId, $path, $displayUrl, &$lastUpdate, &$cancelled) {
 					$now = time();
 					if ($now - $lastUpdate < 2) {
 						return 0;
@@ -122,7 +134,7 @@ class TransferService {
 					$cache->set('progress:' . $transferId, json_encode([
 						"id" => $transferId,
 						"filename" => basename($path),
-						"url" => $url,
+						"url" => $displayUrl,
 						"total" => $downloadTotal,
 						"downloaded" => $downloaded,
 						"updated" => $now,
@@ -136,7 +148,7 @@ class TransferService {
 			if ($cache) $this->removeTransfer($cache, $userId, $transferId);
 			@unlink($tmpPath);
 			if ($cancelled) {
-				$this->generateFailedEvent($userId, $path, $url);
+				$this->generateFailedEvent($userId, $path, $displayUrl);
 				return ['result' => self::RESULT_CANCELLED];
 			}
 			if ($exception instanceof LocalServerException) {
@@ -146,13 +158,13 @@ class TransferService {
 				$host = parse_url($url, PHP_URL_HOST);
 				if (is_string($host) && !filter_var($host, FILTER_VALIDATE_IP)
 					&& gethostbyname($host) === $host) {
-					$this->generateFailedEvent($userId, $path, $url);
+					$this->generateFailedEvent($userId, $path, $displayUrl);
 					return ['result' => self::RESULT_CONNECT_ERROR];
 				}
-				$this->generateBlockedEvent($userId, $path, $url);
+				$this->generateBlockedEvent($userId, $path, $displayUrl);
 				return ['result' => self::RESULT_BLOCKED];
 			}
-			$this->generateFailedEvent($userId, $path, $url);
+			$this->generateFailedEvent($userId, $path, $displayUrl);
 			// The remote site answering with an error is a normal outcome,
 			// not a fault of this server. Report what happened.
 			if ($exception instanceof BadResponseException) {
@@ -177,7 +189,7 @@ class TransferService {
 				$dir = $userFolder->get($dirPath);
 			} catch (NotFoundException $e) {
 				unlink($tmpPath);
-				$this->generateFailedEvent($userId, $path, $url);
+				$this->generateFailedEvent($userId, $path, $displayUrl);
 				return ['result' => self::RESULT_FAILED];
 			}
 
@@ -199,7 +211,7 @@ class TransferService {
 					}
 					if ($attempt === 4) {
 						unlink($tmpPath);
-						$this->generateFailedEvent($userId, $path, $url);
+						$this->generateFailedEvent($userId, $path, $displayUrl);
 						return ['result' => self::RESULT_FAILED];
 					}
 					usleep(100000); // 100ms before retry
@@ -208,12 +220,12 @@ class TransferService {
 			unlink($tmpPath);
 
 			$actualPath = $dirPath . '/' . $uniqueName;
-			$this->generateSucceededEvent($userId, $actualPath, $url, $file->getId());
+			$this->generateSucceededEvent($userId, $actualPath, $displayUrl, $file->getId());
 			return ['result' => self::RESULT_SUCCESS];
 		} else {
 			unlink($tmpPath);
 
-			$this->generateHashFailedEvent($userId, $path, $url);
+			$this->generateHashFailedEvent($userId, $path, $displayUrl);
 			return ['result' => self::RESULT_HASH_MISMATCH];
 		}
 	}
@@ -233,6 +245,7 @@ class TransferService {
 	}
 
 	protected function generateStartedEvent(string $userId, string $path, string $url) {
+		$url = self::stripCredentials($url);
 		$event = $this->activityManager->generateEvent();
 		$event->setApp("transfer");
 		$event->setType(TransferStartedProvider::TYPE_TRANSFER_STARTED);
@@ -242,6 +255,7 @@ class TransferService {
 	}
 
 	protected function generateFailedEvent(string $userId, string $path, string $url) {
+		$url = self::stripCredentials($url);
 		$event = $this->activityManager->generateEvent();
 		$event->setApp("transfer");
 		$event->setType(TransferFailedProvider::TYPE_TRANSFER_FAILED);
@@ -251,6 +265,7 @@ class TransferService {
 	}
 
 	protected function generateHashFailedEvent(string $userId, string $path, string $url) {
+		$url = self::stripCredentials($url);
 		$event = $this->activityManager->generateEvent();
 		$event->setApp("transfer");
 		$event->setType(TransferFailedProvider::TYPE_TRANSFER_FAILED);
@@ -260,6 +275,7 @@ class TransferService {
 	}
 
 	protected function generateBlockedEvent(string $userId, string $path, string $url) {
+		$url = self::stripCredentials($url);
 		$event = $this->activityManager->generateEvent();
 		$event->setApp("transfer");
 		$event->setType(TransferFailedProvider::TYPE_TRANSFER_FAILED);
@@ -269,6 +285,7 @@ class TransferService {
 	}
 
 	protected function generateSucceededEvent(string $userId, string $path, string $url, int $fileId) {
+		$url = self::stripCredentials($url);
 		$event = $this->activityManager->generateEvent();
 		$event->setApp("transfer");
 		$event->setType(TransferSucceededProvider::TYPE_TRANSFER_SUCCEEDED);
