@@ -15,7 +15,7 @@
     "\"Upload by link\" functionality for Nextcloud. Transfer files\n                using the full bandwidth available to your server. Avoid the need to\n                leave your own device online to finish an upload." : "Funcionalidade “Upload por link” para o Nextcloud. Transfira arquivos\nutilizando toda a largura de banda disponível no seu servidor. Evite a necessidade de\nmanter seu próprio dispositivo conectado à internet para concluir um envio.",
     "Link" : "Link",
     "File name" : "Nome de arquivo",
-    "Verify checksum" : "Verificar a soma de verificação",
+    "Verify checksum" : "Verificar soma de verificação",
     "Some websites provide a checksum to verify the file is not corrupted." : "Alguns sites fornecem uma soma de verificação para confirmar que o arquivo não está corrompido.",
     "Algorithm" : "Algoritmo",
     "Checksum" : "Soma de verificação",
