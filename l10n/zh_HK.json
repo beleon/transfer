@@ -12,6 +12,7 @@
     "An upload by link was successful" : "透過連結上傳成功",
     "Transfer" : "轉移",
     "Add a file to Nextcloud from a web link." : "從 Web 連結將檔案添加到 Nextcloud。",
+    "\"Upload by link\" functionality for Nextcloud. Transfer files\n                using the full bandwidth available to your server. Avoid the need to\n                leave your own device online to finish an upload." : "Nextcloud 的「透過連結上傳」功能。\n            使用伺服器可用的全部頻寬轉移檔案。\n            不需要讓自己的裝置維持在線上即可完成上傳。",
     "Link" : "連結",
     "File name" : "檔案名稱",
     "Verify checksum" : "驗證校驗碼",
