@@ -671,7 +671,7 @@ function showDialog(currentPath) {
 					case 'success':
 						if (progressTimer) clearInterval(progressTimer)
 						transferId = null
-						notify(t('transfer', 'The file has been transferred successfully.'))
+						notify(t('transfer', 'The file has been transferred.'))
 						close()
 						break
 					case 'cancelled':
