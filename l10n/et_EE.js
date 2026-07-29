@@ -21,6 +21,8 @@ OC.L10N.register(
     "Checksum" : "Kontrollsumma",
     "Cancel" : "Katkesta",
     "Upload" : "Laadi üles",
-    "Starting…" : "Alustan…"
+    "Starting…" : "Alustan…",
+    "Cancelling…" : "Katkestan…",
+    "Checking..." : "Kontrollin…"
 },
 "nplurals=2; plural=(n != 1);");

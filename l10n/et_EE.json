@@ -19,6 +19,8 @@
     "Checksum" : "Kontrollsumma",
     "Cancel" : "Katkesta",
     "Upload" : "Laadi üles",
-    "Starting…" : "Alustan…"
+    "Starting…" : "Alustan…",
+    "Cancelling…" : "Katkestan…",
+    "Checking..." : "Kontrollin…"
 },"pluralForm" :"nplurals=2; plural=(n != 1);"
 }
