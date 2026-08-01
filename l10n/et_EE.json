@@ -20,7 +20,17 @@
     "Cancel" : "Katkesta",
     "Upload" : "Laadi üles",
     "Starting…" : "Alustan…",
+    "The download failed. The remote server responded with status {statusCode}." : "Allalaadimine ei õnnestunud. Kaugserveri päringuvastus oli {statusCode}.",
+    "The download failed. The remote server could not be reached." : "Allalaadimine ei õnnestunud. Kaugserver polnud leitav.",
+    "The URL is not allowed by this server's security settings." : "See võrguaadress pole serveri turvareeglite alusel lubatud.",
+    "The checksum did not match. The file was discarded." : "Kontrollsummad ei vasta. Failist said loobutud.",
+    "Transfer failed." : "Failiedastamine ei õnnestunud.",
     "Cancelling…" : "Katkestan…",
+    "The transfer could not be started." : "Failiedastamise alustamine ei õnnestunud.",
+    "The file has been transferred successfully." : "Failiedastamine õnnestus.",
+    "The transfer is queued and will begin processing soon." : "Failiedastamine on lisatud tööde järjekorda ja kuulub õige pea töötlemisele.",
+    "The transfer could not be queued." : "Failiedastamise lisamine tööde järjekorda ei õnnestunud.",
+    "No active transfers." : "Aktiivseid failiedastamisi ei leidu.",
     "Checking..." : "Kontrollin…"
 },"pluralForm" :"nplurals=2; plural=(n != 1);"
 }
