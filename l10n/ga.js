@@ -34,7 +34,6 @@ OC.L10N.register(
     "Transfer failed." : "Theip ar an aistriú.",
     "Cancelling…" : "Ag cealú…",
     "The transfer could not be started." : "Níorbh fhéidir an t-aistriú a thosú.",
-    "The file has been transferred successfully." : "Tá an comhad aistrithe go rathúil.",
     "The transfer is queued and will begin processing soon." : "Tá an t-aistriú i scuaine agus cuirfear tús lena phróiseáil go luath.",
     "The transfer could not be queued." : "Níorbh fhéidir an t-aistriú a chur sa scuaine.",
     "No active transfers." : "Gan aon aistrithe gníomhacha.",

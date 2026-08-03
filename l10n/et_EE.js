@@ -29,7 +29,6 @@ OC.L10N.register(
     "Transfer failed." : "Failiedastamine ei õnnestunud.",
     "Cancelling…" : "Katkestan…",
     "The transfer could not be started." : "Failiedastamise alustamine ei õnnestunud.",
-    "The file has been transferred successfully." : "Failiedastamine õnnestus.",
     "The transfer is queued and will begin processing soon." : "Failiedastamine on lisatud tööde järjekorda ja kuulub õige pea töötlemisele.",
     "The transfer could not be queued." : "Failiedastamise lisamine tööde järjekorda ei õnnestunud.",
     "No active transfers." : "Aktiivseid failiedastamisi ei leidu.",

@@ -34,7 +34,6 @@ OC.L10N.register(
     "Transfer failed." : "Échec du transfert.",
     "Cancelling…" : "Annulation…",
     "The transfer could not be started." : "Impossible de démarrer le transfert.",
-    "The file has been transferred successfully." : "Le fichier a bien été transféré.",
     "The transfer is queued and will begin processing soon." : "Le transfert est en attente et son traitement commencera bientôt.",
     "The transfer could not be queued." : "Impossible de mettre le transfert en attente.",
     "No active transfers." : "Aucun transfert en cours.",

@@ -32,7 +32,6 @@
     "Transfer failed." : "Pobieranie nie powiodło się.",
     "Cancelling…" : "Anulowanie…",
     "The transfer could not be started." : "Nie udało się rozpocząć pobierania.",
-    "The file has been transferred successfully." : "Plik został dodany.",
     "The transfer is queued and will begin processing soon." : "Pobieranie zostało dodane do kolejki i wkrótce się rozpocznie.",
     "The transfer could not be queued." : "Nie udało się dodać pobierania do kolejki.",
     "No active transfers." : "Brak aktywnych pobierań.",

@@ -32,7 +32,6 @@
     "Transfer failed." : "Übertragung fehlgeschlagen.",
     "Cancelling…" : "Abbrechen …",
     "The transfer could not be started." : "Übertragung konnte nicht gestartet werden.",
-    "The file has been transferred successfully." : "Datei wurde übertragen.",
     "The transfer is queued and will begin processing soon." : "Übertragung ist in der Warteschlange und wird bald verarbeitet werden.",
     "The transfer could not be queued." : "Übertragung konnte nicht in die Warteschlange gestellt werden.",
     "No active transfers." : "Keine aktiven Übertragungen",

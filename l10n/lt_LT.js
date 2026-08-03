@@ -34,7 +34,6 @@ OC.L10N.register(
     "Transfer failed." : "Perkėlimas nepavyko.",
     "Cancelling…" : "Atšaukiama...",
     "The transfer could not be started." : "Perkėlimo nepavyko pradėti.",
-    "The file has been transferred successfully." : "Failas sėkmingai perkeltas.",
     "The transfer is queued and will begin processing soon." : "Perkėlimas įtrauktas į eilę ir netrukus bus pradėtas apdoroti.",
     "The transfer could not be queued." : "Perkėlimo nepavyko įtraukti į eilę.",
     "No active transfers." : "Nėra aktyvių perkėlimų.",

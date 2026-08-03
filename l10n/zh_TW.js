@@ -34,7 +34,6 @@ OC.L10N.register(
     "Transfer failed." : "轉移失敗。",
     "Cancelling…" : "正在取消⋯⋯",
     "The transfer could not be started." : "無法開始轉移。",
-    "The file has been transferred successfully." : "檔案已轉移成功。",
     "The transfer is queued and will begin processing soon." : "轉移已排入佇列，很快就會開始處理。",
     "The transfer could not be queued." : "無法將轉移排入佇列。",
     "No active transfers." : "沒有作用中的轉移。",

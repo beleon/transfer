@@ -34,7 +34,6 @@ OC.L10N.register(
     "Transfer failed." : "Η μεταφορά απέτυχε.",
     "Cancelling…" : "Ακύρωση σε εξέλιξη…",
     "The transfer could not be started." : "Δεν ήταν δυνατή η εκκίνηση της μεταφοράς.",
-    "The file has been transferred successfully." : "Το αρχείο μεταφέρθηκε με επιτυχία.",
     "The transfer is queued and will begin processing soon." : "Η μεταφορά βρίσκεται σε ουρά και η επεξεργασία της θα ξεκινήσει σύντομα.",
     "The transfer could not be queued." : "Δεν ήταν δυνατή η τοποθέτηση της μεταφοράς στην ουρά.",
     "No active transfers." : "Δεν υπάρχουν ενεργές μεταφορές.",
