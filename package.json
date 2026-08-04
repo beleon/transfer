@@ -7,7 +7,9 @@
     "url": "git+https://github.com/beleon/transfer.git"
   },
   "author": "Daniel Thwaites",
-  "contributors": ["Leon Becker"],
+  "contributors": [
+    "Leon Becker"
+  ],
   "license": "AGPL",
   "bugs": {
     "url": "https://github.com/beleon/transfer/issues"
@@ -27,14 +29,14 @@
     "extends @nextcloud/browserslist-config"
   ],
   "dependencies": {
-    "@nextcloud/axios": "^2.5.1",
-    "@nextcloud/files": "^3.8.0",
-    "@nextcloud/l10n": "^3.1.0",
-    "@nextcloud/router": "^3.0.1"
+    "@nextcloud/axios": "^2.6.0",
+    "@nextcloud/files": "^3.12.2",
+    "@nextcloud/l10n": "^3.4.1",
+    "@nextcloud/router": "^3.1.0"
   },
   "devDependencies": {
-    "@nextcloud/browserslist-config": "^3.0.1",
-    "@nextcloud/vite-config": "^1.5.2",
-    "vite": "^7.3.5"
+    "@nextcloud/browserslist-config": "^3.1.2",
+    "@nextcloud/vite-config": "^1.7.2",
+    "vite": "^7.3.6"
   }
 }
