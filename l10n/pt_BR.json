@@ -32,6 +32,7 @@
     "Transfer failed." : "A transferência falhou.",
     "Cancelling…" : "Cancelando…",
     "The transfer could not be started." : "Não foi possível iniciar a transferência.",
+    "The file has been transferred." : "O arquivo foi transferido.",
     "The transfer is queued and will begin processing soon." : "A transferência está na fila e começará a ser processada em breve.",
     "The transfer could not be queued." : "A transferência não pôde ser colocada na fila.",
     "No active transfers." : "Não há transferências em andamento.",

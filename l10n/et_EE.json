@@ -15,8 +15,13 @@
     "\"Upload by link\" functionality for Nextcloud. Transfer files\n                using the full bandwidth available to your server. Avoid the need to\n                leave your own device online to finish an upload." : "Veebilingi alusel Nextcloudi üleslaadimise võimalus.\nFailiedastus toimub kogu serveri kasutatava üleslaadimiskiirusega.\nVäldid vajadust hoida oma seadet kogu üleslaadimise ajal selle lõpetamiseks sees.",
     "Link" : "Link",
     "File name" : "Failinimi",
+    "Verify checksum" : "Kontrolli kontrollsumma õigsust",
+    "Some websites provide a checksum to verify the file is not corrupted." : "Mõnedes veebisaitides leidub lisaks failile ka kontrollsumma, mis võimaldab faili hilisema õigsuse kontrollimist.",
     "Algorithm" : "Algoritm",
     "Checksum" : "Kontrollsumma",
+    "Transfer immediately" : "Edasta kohe",
+    "Starts the transfer right away instead of waiting for the next background job cycle. Keep this page open until it finishes. Leaving or closing the page cancels the transfer." : "Andmeedastus algab kohe, ilma et oodataks järgmist taustaülesannete tsüklit. Jäta see leht avatuks, kuni andmeedastus on lõppenud. Lehelt lahkumine või selle sulgemine tühistab andmeedastuse.",
+    "Queued transfers can be tracked under Settings > Transfer." : "Järjekorda lisatud failiedastused on leitavad siit: „Seadistused“ → „Failiedastus“",
     "Cancel" : "Katkesta",
     "Upload" : "Laadi üles",
     "Starting…" : "Alustan…",
@@ -27,9 +32,12 @@
     "Transfer failed." : "Failiedastamine ei õnnestunud.",
     "Cancelling…" : "Katkestan…",
     "The transfer could not be started." : "Failiedastamise alustamine ei õnnestunud.",
+    "The file has been transferred." : "See fail on edastatud.",
     "The transfer is queued and will begin processing soon." : "Failiedastamine on lisatud tööde järjekorda ja kuulub õige pea töötlemisele.",
     "The transfer could not be queued." : "Failiedastamise lisamine tööde järjekorda ei õnnestunud.",
     "No active transfers." : "Aktiivseid failiedastamisi ei leidu.",
+    "Progress tracking requires Redis or Memcached. See the Nextcloud documentation for setup instructions." : "Edenemise jälgimine, et serveris leidub Redis or Memcached. Seadistusjuhendi leiad Nextcloudi dokumentatsioonist.",
+    "Active file transfers from URLs." : "Hetkel aktiivsed failiedastused",
     "Checking..." : "Kontrollin…"
 },"pluralForm" :"nplurals=2; plural=(n != 1);"
 }
