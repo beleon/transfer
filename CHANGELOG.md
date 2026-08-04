@@ -4,12 +4,28 @@ All notable changes to this project are documented here. The format is based on
 [Keep a Changelog](https://keepachangelog.com/en/1.1.0/), and this project
 follows [Semantic Versioning](https://semver.org/).
 
-## [Unreleased]
+## [1.0.1] - 2026-08-03
 
 ### Fixed
 - URLs containing credentials (https://user:password@host/...) no longer expose
   them in activity events or on the settings page. The download still uses them,
   the displayed URL does not.
+
+### Changed
+- The success message reads "The file has been transferred." instead of
+  "transferred successfully", per the Nextcloud wording guidelines.
+
+### Translations
+- Updated translations from Transifex. The strings added in 1.0.0 are now
+  translated in a range of locales.
+
+### Dependencies
+- vite 7.3.5 to 7.3.6
+- @nextcloud/axios 2.5.1 to 2.6.0
+- @nextcloud/files 3.8.0 to 3.12.2
+- @nextcloud/l10n 3.1.0 to 3.4.1
+- @nextcloud/router 3.0.1 to 3.1.0
+- @nextcloud/browserslist-config 3.0.1 to 3.1.2
 
 ## [1.0.0] - 2026-07-12
 
