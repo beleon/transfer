@@ -34,6 +34,7 @@ OC.L10N.register(
     "Transfer failed." : "Transfer failed.",
     "Cancelling…" : "Cancelling…",
     "The transfer could not be started." : "The transfer could not be started.",
+    "The file has been transferred." : "The file has been transferred.",
     "The transfer is queued and will begin processing soon." : "The transfer is queued and will begin processing soon.",
     "The transfer could not be queued." : "The transfer could not be queued.",
     "No active transfers." : "No active transfers.",
