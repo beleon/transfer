@@ -16,10 +16,14 @@ OC.L10N.register(
     "Add a file to Nextcloud from a web link." : "Додайте файл до хмари Nextcloud через вебпосилання",
     "Link" : "Посилання",
     "File name" : "Ім'я файлу",
+    "Verify checksum" : "Перевірити контрольну суму",
     "Algorithm" : "Алгоритм",
     "Checksum" : "Контрольна сума",
+    "Transfer immediately" : "Передати одразу",
     "Cancel" : "Скасувати",
     "Upload" : "Завантажити",
-    "Starting…" : "Починаємо..."
+    "Starting…" : "Починаємо...",
+    "Transfer failed." : "Передача не вдалася",
+    "Cancelling…" : "Скасування ..."
 },
 "nplurals=4; plural=(n % 1 == 0 && n % 10 == 1 && n % 100 != 11 ? 0 : n % 1 == 0 && n % 10 >= 2 && n % 10 <= 4 && (n % 100 < 12 || n % 100 > 14) ? 1 : n % 1 == 0 && (n % 10 ==0 || (n % 10 >=5 && n % 10 <=9) || (n % 100 >=11 && n % 100 <=14 )) ? 2: 3);");
