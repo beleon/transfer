@@ -2,7 +2,7 @@
     "Upload by link" : "Nahrávanie prostredníctvom odkazu",
     "Transfer of {url} failed" : "Prenos {url} skončil s chybou",
     "Transfer of {url} failed because its checksum did not match" : "Prenos adresy {url} zlyhal, pretože kontrolný súčet sa nezhoduje",
-    "Transfer of {url} was blocked because it uses a restricted address" : "Prenos adresy {url} bol zablokovaný, pretože používa obmedzenú adresu",
+    "Transfer of {url} was blocked because it uses a restricted address" : "Prenos {url} bol zablokovaný, pretože používa obmedzenú adresu",
     "Transfer of {url} started" : "Prenos {url} sa začal",
     "Saved from {url}" : "Uložené z adresy {url}",
     "{url} was saved to {file}" : "{url} sa uložil do {file}",
