@@ -3,6 +3,7 @@ OC.L10N.register(
     {
     "Files" : "Archivo",
     "Transfer" : "Transferir",
+    "File name" : "Nombre del archivo",
     "Cancel" : "Cancel",
     "Upload" : "Cargar"
 },
