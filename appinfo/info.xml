@@ -11,7 +11,7 @@
 	</description>
 	<version>1.0.2</version>
 	<licence>agpl</licence>
-	<author mail="beleon-transfer@mailbox.org">Leon Becker</author>
+	<author mail="beleon-transfer@mailbox.org" homepage="https://leonbecker.de">Leon Becker</author>
 	<author mail="danth@danth.me" homepage="https://danth.me">Daniel Thwaites</author>
 	<namespace>Transfer</namespace>
 	<category>files</category>

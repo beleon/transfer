@@ -6,9 +6,9 @@
     "type": "git",
     "url": "git+https://github.com/beleon/transfer.git"
   },
-  "author": "Leon Becker <beleon-transfer@mailbox.org>",
+  "author": "Leon Becker <beleon-transfer@mailbox.org> (https://leonbecker.de)",
   "contributors": [
-    "Daniel Thwaites <danth@danth.me>"
+    "Daniel Thwaites <danth@danth.me> (https://danth.me)"
   ],
   "license": "AGPL",
   "bugs": {
