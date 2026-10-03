@@ -4,6 +4,22 @@ All notable changes to this project are documented here. The format is based on
 [Keep a Changelog](https://keepachangelog.com/en/1.1.0/), and this project
 follows [Semantic Versioning](https://semver.org/).
 
+## [1.0.3] - 2026-10-03
+
+### Added
+- Compatibility with Nextcloud 35.
+
+### Changed
+- The maintainer entry in the app metadata now links to a homepage.
+
+### Translations
+- Updated translations from Transifex (es_AR, id, sk).
+
+### Dependencies
+- @nextcloud/router 3.1.0 to 3.2.0
+- Bundled libraries refreshed within their existing ranges: webdav 5.10.0 to
+  5.11.0, follow-redirects 1.16.0 to 1.16.1, fast-xml-parser 5.11.1 to 5.11.2.
+
 ## [1.0.2] - 2026-09-10
 
 ### Changed
