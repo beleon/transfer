@@ -5,7 +5,7 @@
     "Transfer of {url} was blocked because it uses a restricted address" : "Prenos {url} bol zablokovaný, pretože používa obmedzenú adresu",
     "Transfer of {url} started" : "Prenos {url} sa začal",
     "Saved from {url}" : "Uložené z adresy {url}",
-    "{url} was saved to {file}" : "{url} sa uložil do {file}",
+    "{url} was saved to {file}" : "{url} sa uložila do {file}",
     "An upload by link was unsuccessful" : "Nahrávanie prostredníctvom odkazu bolo neúspešné",
     "Files" : "Súbory",
     "An upload by link is being processed" : "Nahrávanie prostredníctvom odkazu sa spracúva",
