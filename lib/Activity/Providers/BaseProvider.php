@@ -21,6 +21,23 @@ abstract class BaseProvider implements IProvider {
         $this->urlGenerator = $urlGenerator;
     }
 
+    /**
+     * Exception to throw when an event does not belong to this provider.
+     *
+     * Nextcloud 30 introduced UnknownActivityException for this and logs a
+     * deprecation warning whenever a provider throws a plain
+     * InvalidArgumentException instead. The class does not exist on
+     * Nextcloud 29, so fall back there. UnknownActivityException extends
+     * InvalidArgumentException, so callers can handle both the same way.
+     */
+    protected function unknownEvent(): \InvalidArgumentException {
+        $class = "OCP\\Activity\\Exceptions\\UnknownActivityException";
+        if (class_exists($class)) {
+            return new $class();
+        }
+        return new \InvalidArgumentException();
+    }
+
     protected function setIcon(IEvent $event) {
         // TODO: Respect activityManager->getRequirePNG()
         $event->setIcon(

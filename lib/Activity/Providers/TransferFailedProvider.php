@@ -11,7 +11,7 @@ class TransferFailedProvider extends BaseProvider {
 
     public function parse($language, IEvent $event, ?IEvent $previousEvent = null) {
         if ($event->getApp() !== "transfer" || $event->getType() !== self::TYPE_TRANSFER_FAILED) {
-            throw new \InvalidArgumentException();
+            throw $this->unknownEvent();
         }
 
         $l = $this->languageFactory->get("transfer", $language);
