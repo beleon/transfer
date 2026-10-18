@@ -1,9 +1,11 @@
 OC.L10N.register(
     "transfer",
     {
+    "Files" : "Fișiere",
     "Transfer" : "Transfer",
     "Link" : "Legătură",
     "File name" : "Nume fișier",
+    "Checksum" : "Sumă de control",
     "Cancel" : "Cancel",
     "Upload" : "Încărcare"
 },
