@@ -217,9 +217,18 @@ class TransferController extends Controller {
 		$transfers = [];
 		foreach ($index as $transferId) {
 			$data = $cache->get('progress:' . $transferId);
-			if ($data !== null) {
-				$transfers[] = json_decode($data, true);
+			if ($data === null) {
+				continue;
 			}
+			$transfer = json_decode($data, true);
+			// A live download refreshes its entry every two seconds and
+			// gives up after a 120 s stall. Anything older than that is a
+			// process that died mid-transfer; hide it instead of showing a
+			// frozen entry with a Cancel button that nobody reads.
+			if ((time() - (int)($transfer['updated'] ?? 0)) > 180) {
+				continue;
+			}
+			$transfers[] = $transfer;
 		}
 		return new DataResponse($transfers, Http::STATUS_OK);
 	}
