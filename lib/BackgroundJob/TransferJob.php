@@ -15,6 +15,9 @@ class TransferJob extends QueuedJob {
 	}
 
 	protected function run($arguments) {
+		// Nextcloud only lifts the PHP time limit for CLI cron. Under the
+		// default ajax mode a large download would die on max_execution_time.
+		@set_time_limit(0);
 		$this->service->transfer(
 			$arguments["userId"],
 			$arguments["path"],
