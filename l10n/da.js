@@ -25,7 +25,7 @@ OC.L10N.register(
     "Starts the transfer right away instead of waiting for the next background job cycle. Keep this page open until it finishes. Leaving or closing the page cancels the transfer." : "Starter overførslen med det samme i stedet for at vente på næste kørsel af baggrundsjob. Hold siden åben, til overførslen er færdig. Hvis du forlader eller lukker siden, annulleres overførslen.",
     "Queued transfers can be tracked under Settings > Transfer." : "Overførsler i kø kan spores under Indstillinger > Overførsel.",
     "Cancel" : "Annullér",
-    "Upload" : "Upload",
+    "Upload" : "Overfør",
     "Starting…" : "Starter …",
     "The download failed. The remote server responded with status {statusCode}." : "Hentningen mislykkedes. Fjernserveren svarede med status {statusCode}.",
     "The download failed. The remote server could not be reached." : "Hentningen mislykkedes. Fjernserveren kunne ikke nås.",

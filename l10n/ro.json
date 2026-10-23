@@ -5,6 +5,7 @@
     "File name" : "Nume fișier",
     "Checksum" : "Sumă de control",
     "Cancel" : "Cancel",
-    "Upload" : "Încărcare"
+    "Upload" : "Încărcare",
+    "Starting…" : "Se pornește…"
 },"pluralForm" :"nplurals=3; plural=(n==1?0:(((n%100>19)||((n%100==0)&&(n!=0)))?2:1));"
 }

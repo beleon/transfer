@@ -7,6 +7,7 @@ OC.L10N.register(
     "File name" : "Nume fișier",
     "Checksum" : "Sumă de control",
     "Cancel" : "Cancel",
-    "Upload" : "Încărcare"
+    "Upload" : "Încărcare",
+    "Starting…" : "Se pornește…"
 },
 "nplurals=3; plural=(n==1?0:(((n%100>19)||((n%100==0)&&(n!=0)))?2:1));");
