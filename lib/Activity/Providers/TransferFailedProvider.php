@@ -17,9 +17,28 @@ class TransferFailedProvider extends BaseProvider {
 
         $l = $this->languageFactory->get("transfer", $language);
 
+        $subjectParameters = $event->getSubjectParameters();
+        $parameters = [
+            "url" => [
+                "type" => "highlight",
+                "id" => $subjectParameters["url"],
+                "name" => $subjectParameters["url"],
+            ],
+        ];
+
         $subject = "";
         if ($event->getSubject() == self::SUBJECT_TRANSFER_FAILED) {
-            $subject = $l->t("Transfer of {url} failed");
+            $reason = $this->reasonText($l, $subjectParameters);
+            if ($reason === "") {
+                $subject = $l->t("Transfer of {url} failed");
+            } else {
+                $subject = $l->t("Transfer of {url} failed ({reason})");
+                $parameters["reason"] = [
+                    "type" => "highlight",
+                    "id" => "reason",
+                    "name" => $reason,
+                ];
+            }
         } elseif ($event->getSubject() == self::SUBJECT_TRANSFER_HASH_FAILED) {
             $subject = $l->t("Transfer of {url} failed because its checksum did not match");
         } elseif ($event->getSubject() == self::SUBJECT_TRANSFER_CANCELLED) {
@@ -28,16 +47,30 @@ class TransferFailedProvider extends BaseProvider {
             $subject = $l->t("Transfer of {url} was blocked because it uses a restricted address");
         }
 
-        $subjectParameters = $event->getSubjectParameters();
-        $event->setRichSubject($subject, [
-            "url" => [
-                "type" => "highlight",
-                "id" => $subjectParameters["url"],
-                "name" => $subjectParameters["url"],
-            ],
-        ]);
+        $event->setRichSubject($subject, $parameters);
 
         $this->setIcon($event);
         return $event;
+    }
+
+    /**
+     * Human-readable failure reason from the subject parameters, or an
+     * empty string for events published before reasons were recorded.
+     */
+    protected function reasonText($l, array $subjectParameters): string {
+        switch ($subjectParameters["reason"] ?? "") {
+            case "http_error":
+                return $l->t("the remote server responded with status %s", [(string)($subjectParameters["httpStatus"] ?? "")]);
+            case "connect_error":
+                return $l->t("the remote server could not be reached");
+            case "folder_missing":
+                return $l->t("the target folder does not exist");
+            case "write_error":
+                return $l->t("the file could not be written");
+            case "error":
+                return $l->t("unexpected error");
+            default:
+                return "";
+        }
     }
 }

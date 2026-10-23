@@ -17,6 +17,8 @@ use OCP\ICacheFactory;
 use OCP\IConfig;
 use OCP\ITempManager;
 
+use Psr\Log\LoggerInterface;
+
 class TransferService {
 	public const RESULT_SUCCESS = 'success';
 	public const RESULT_CANCELLED = 'cancelled';
@@ -32,6 +34,7 @@ class TransferService {
 	protected $tempManager;
 	protected $cacheFactory;
 	protected $config;
+	protected $logger;
 
 	public function __construct(
 		IManager $activityManager,
@@ -39,7 +42,8 @@ class TransferService {
 		IRootFolder $rootFolder,
 		ITempManager $tempManager,
 		ICacheFactory $cacheFactory,
-		IConfig $config
+		IConfig $config,
+		LoggerInterface $logger
 	) {
 		$this->activityManager = $activityManager;
 		$this->clientService = $clientService;
@@ -47,6 +51,7 @@ class TransferService {
 		$this->tempManager = $tempManager;
 		$this->cacheFactory = $cacheFactory;
 		$this->config = $config;
+		$this->logger = $logger;
 	}
 
 	public function isProgressAvailable(): bool {
@@ -168,24 +173,36 @@ class TransferService {
 				$host = is_string($host) ? trim($host, '[]') : '';
 				if ($host !== '' && !filter_var($host, FILTER_VALIDATE_IP)
 					&& !self::resolves($host)) {
-					$this->generateFailedEvent($userId, $path, $displayUrl);
+					$this->generateFailedEvent($userId, $path, $displayUrl, 'connect_error');
+					$this->logger->info('Transfer of {url} failed: host does not resolve', [
+						'app' => 'transfer', 'url' => $displayUrl,
+					]);
 					return ['result' => self::RESULT_CONNECT_ERROR];
 				}
 				$this->generateBlockedEvent($userId, $path, $displayUrl);
 				return ['result' => self::RESULT_BLOCKED];
 			}
-			$this->generateFailedEvent($userId, $path, $displayUrl);
 			// The remote site answering with an error is a normal outcome,
 			// not a fault of this server. Report what happened.
 			if ($exception instanceof BadResponseException) {
-				return [
-					'result' => self::RESULT_HTTP_ERROR,
-					'httpStatus' => $exception->getResponse()->getStatusCode(),
-				];
+				$status = $exception->getResponse()->getStatusCode();
+				$this->generateFailedEvent($userId, $path, $displayUrl, 'http_error', $status);
+				$this->logger->info('Transfer of {url} failed: HTTP {status}', [
+					'app' => 'transfer', 'url' => $displayUrl, 'status' => $status,
+				]);
+				return ['result' => self::RESULT_HTTP_ERROR, 'httpStatus' => $status];
 			}
 			if ($exception instanceof ConnectException) {
+				$this->generateFailedEvent($userId, $path, $displayUrl, 'connect_error');
+				$this->logger->info('Transfer of {url} failed: {message}', [
+					'app' => 'transfer', 'url' => $displayUrl, 'message' => $exception->getMessage(),
+				]);
 				return ['result' => self::RESULT_CONNECT_ERROR];
 			}
+			$this->generateFailedEvent($userId, $path, $displayUrl, 'error');
+			$this->logger->warning('Transfer of {url} failed: {message}', [
+				'app' => 'transfer', 'url' => $displayUrl, 'message' => $exception->getMessage(),
+			]);
 			return ['result' => self::RESULT_FAILED];
 		}
 
@@ -199,7 +216,10 @@ class TransferService {
 				$dir = $userFolder->get($dirPath);
 			} catch (NotFoundException $e) {
 				unlink($tmpPath);
-				$this->generateFailedEvent($userId, $path, $displayUrl);
+				$this->generateFailedEvent($userId, $path, $displayUrl, 'folder_missing');
+				$this->logger->info('Transfer of {url} failed: target folder {dir} does not exist', [
+					'app' => 'transfer', 'url' => $displayUrl, 'dir' => $dirPath,
+				]);
 				return ['result' => self::RESULT_FAILED];
 			}
 
@@ -221,7 +241,10 @@ class TransferService {
 					}
 					if ($attempt === 4) {
 						unlink($tmpPath);
-						$this->generateFailedEvent($userId, $path, $displayUrl);
+						$this->generateFailedEvent($userId, $path, $displayUrl, 'write_error');
+						$this->logger->warning('Transfer of {url} failed: could not write {path}: {message}', [
+							'app' => 'transfer', 'url' => $displayUrl, 'path' => $path, 'message' => $e->getMessage(),
+						]);
 						return ['result' => self::RESULT_FAILED];
 					}
 					usleep(100000); // 100ms before retry
@@ -264,13 +287,24 @@ class TransferService {
 		$this->activityManager->publish($event);
 	}
 
-	protected function generateFailedEvent(string $userId, string $path, string $url) {
+	/**
+	 * @param string $reason one of http_error, connect_error, folder_missing,
+	 *                       write_error, error; empty for no detail
+	 */
+	protected function generateFailedEvent(string $userId, string $path, string $url, string $reason = '', int $httpStatus = 0) {
 		$url = self::stripCredentials($url);
+		$parameters = ["url" => $url];
+		if ($reason !== '') {
+			$parameters["reason"] = $reason;
+		}
+		if ($httpStatus > 0) {
+			$parameters["httpStatus"] = $httpStatus;
+		}
 		$event = $this->activityManager->generateEvent();
 		$event->setApp("transfer");
 		$event->setType(TransferFailedProvider::TYPE_TRANSFER_FAILED);
 		$event->setAffectedUser($userId);
-		$event->setSubject(TransferFailedProvider::SUBJECT_TRANSFER_FAILED, ["url" => $url]);
+		$event->setSubject(TransferFailedProvider::SUBJECT_TRANSFER_FAILED, $parameters);
 		$this->activityManager->publish($event);
 	}
 
