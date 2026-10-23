@@ -65,6 +65,15 @@ class TransferService {
 	}
 
 	/**
+	 * Whether the hostname has any A or AAAA record. gethostbyname() only
+	 * knows IPv4 and would report IPv6-only hosts as unresolvable.
+	 */
+	protected static function resolves(string $host): bool {
+		$records = @dns_get_record($host, DNS_A | DNS_AAAA);
+		return is_array($records) && count($records) > 0;
+	}
+
+	/**
 	 * @return array ['result' => one of the RESULT_* constants,
 	 *                'httpStatus' => int, only for RESULT_HTTP_ERROR]
 	 */
@@ -156,8 +165,9 @@ class TransferService {
 				// resolve, since it cannot rule out a local target then.
 				// Report that as unreachable rather than blocked.
 				$host = parse_url($url, PHP_URL_HOST);
-				if (is_string($host) && !filter_var($host, FILTER_VALIDATE_IP)
-					&& gethostbyname($host) === $host) {
+				$host = is_string($host) ? trim($host, '[]') : '';
+				if ($host !== '' && !filter_var($host, FILTER_VALIDATE_IP)
+					&& !self::resolves($host)) {
 					$this->generateFailedEvent($userId, $path, $displayUrl);
 					return ['result' => self::RESULT_CONNECT_ERROR];
 				}
