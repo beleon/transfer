@@ -3,6 +3,7 @@ namespace OCA\Transfer\Service;
 
 use GuzzleHttp\Exception\BadResponseException;
 use GuzzleHttp\Exception\ConnectException;
+use GuzzleHttp\Exception\RequestException;
 
 use OCA\Transfer\Activity\Providers\TransferFailedProvider;
 use OCA\Transfer\Activity\Providers\TransferStartedProvider;
@@ -157,7 +158,7 @@ class TransferService {
 					return 0;
 				};
 			}
-			$response = $client->get($url, $options);
+			$response = $this->download($client, $url, $options);
 		} catch (\Exception $exception) {
 			if ($cache) $this->removeTransfer($cache, $userId, $transferId);
 			@unlink($tmpPath);
@@ -260,6 +261,30 @@ class TransferService {
 
 			$this->generateHashFailedEvent($userId, $path, $displayUrl);
 			return ['result' => self::RESULT_HASH_MISMATCH];
+		}
+	}
+
+	/**
+	 * Run the GET, retrying once over HTTP/1.1 when the server's HTTP/2
+	 * implementation is broken. Nextcloud's client prefers HTTP/2, and some
+	 * servers send headers that are invalid in HTTP/2 (an Upgrade header,
+	 * for example). Browsers tolerate that, curl aborts with CURLE_HTTP2
+	 * (16) or CURLE_HTTP2_STREAM (92).
+	 */
+	protected function download($client, string $url, array $options) {
+		try {
+			return $client->get($url, $options);
+		} catch (RequestException $exception) {
+			$errno = (int)($exception->getHandlerContext()['errno'] ?? 0);
+			if ($errno !== 16 && $errno !== 92) {
+				throw $exception;
+			}
+			$this->logger->info('HTTP/2 failed for {url} (curl error {errno}), retrying with HTTP/1.1', [
+				'app' => 'transfer', 'url' => self::stripCredentials($url), 'errno' => $errno,
+			]);
+			$options['version'] = '1.1';
+			$options['curl'][CURLOPT_HTTP_VERSION] = CURL_HTTP_VERSION_1_1;
+			return $client->get($url, $options);
 		}
 	}
 
