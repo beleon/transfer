@@ -730,7 +730,7 @@ addNewFileMenuEntry({
 	displayName: t('transfer', 'Upload by link'),
 	iconSvgInline: CLOUD_UPLOAD_SVG,
 	order: -1,
-	if: (context) => (context.permissions & Permission.CREATE) !== 0,
+	enabled: (context) => (context.permissions & Permission.CREATE) !== 0,
 	async handler(context) {
 		showDialog(context.path || '/')
 	},
