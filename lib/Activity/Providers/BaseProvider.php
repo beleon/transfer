@@ -8,6 +8,7 @@ use OCP\IURLGenerator;
 use OCP\L10N\IFactory;
 
 abstract class BaseProvider implements IProvider {
+    protected $activityManager;
     protected $languageFactory;
     protected $urlGenerator;
 
