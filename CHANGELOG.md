@@ -4,6 +4,41 @@ All notable changes to this project are documented here. The format is based on
 [Keep a Changelog](https://keepachangelog.com/en/1.1.0/), and this project
 follows [Semantic Versioning](https://semver.org/).
 
+## [1.0.4] - 2026-10-23
+
+### Fixed
+- The activity log no longer fills with deprecation warnings on Nextcloud 30
+  and later, which happened on every refresh of the dashboard activity widget
+  (#273).
+- A failed transfer now says why, in the activity ("the remote server responded
+  with status 404", "the target folder does not exist", ...) and in the
+  Nextcloud log (#276).
+- Downloads from servers with a broken HTTP/2 implementation are retried over
+  HTTP/1.1 instead of failing (#277).
+- "Upload by link" is no longer offered in folders where the user cannot
+  create files.
+- Pressing Enter on a focused button in the dialog no longer starts the
+  transfer.
+- Queued transfers no longer stop at the PHP time limit when background jobs
+  run in AJAX or webcron mode.
+- A cancelled transfer is reported as cancelled, not as failed.
+- The settings page no longer lists transfers whose process died for up to an
+  hour.
+- Blocked IPv6 addresses and IPv6-only hosts are reported as blocked instead of
+  unreachable.
+- The file name probe no longer reveals which hosts the server treats as
+  internal.
+
+### Translations
+- Updated translations from Transifex (da, mn, ro, ru, sk).
+
+### Dependencies
+- @nextcloud/files 3.12.2 to 3.13.0
+- dompurify 3.4.16 to 3.4.17 (bundled, fixes three published advisories)
+- vite 7.3.6 to 7.3.7
+- Other bundled libraries refreshed within their existing ranges:
+  @nextcloud/sharing 0.3.0 to 0.4.0, strnum, strtok3, url-join.
+
 ## [1.0.3] - 2026-10-03
 
 ### Added
