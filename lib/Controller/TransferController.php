@@ -3,7 +3,6 @@ namespace OCA\Transfer\Controller;
 
 use OCP\BackgroundJob\IJobList;
 use OCP\Http\Client\IClientService;
-use OCP\Http\Client\LocalServerException;
 use OCP\ICacheFactory;
 use OCP\IRequest;
 use OCP\AppFramework\Controller;
@@ -188,9 +187,10 @@ class TransferController extends Controller {
 			$mime = strtolower(trim(explode(';', $contentType)[0]));
 			$extension = self::MIME_EXTENSIONS[$mime] ?? '';
 			return new DataResponse(['extension' => $extension], Http::STATUS_OK);
-		} catch (LocalServerException $e) {
-			return new DataResponse(['extension' => ''], Http::STATUS_FORBIDDEN);
 		} catch (\Exception $e) {
+			// Includes LocalServerException. The probe is only a hint for
+			// the file extension, so it must not tell blocked hosts apart
+			// from unreachable ones.
 			return new DataResponse(['extension' => ''], Http::STATUS_OK);
 		}
 	}
