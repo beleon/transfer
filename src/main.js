@@ -715,6 +715,9 @@ function showDialog(currentPath) {
 
 		submitBtn.addEventListener('click', submit)
 		dialog.addEventListener('keydown', (e) => {
+			// Only submit from the text fields. Enter on a focused button
+			// or select must keep its own meaning.
+			if (e.target.tagName !== 'INPUT') return
 			if (e.key === 'Enter' && !submitBtn.disabled) {
 				e.preventDefault()
 				submit()
