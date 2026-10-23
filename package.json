@@ -30,7 +30,7 @@
   ],
   "dependencies": {
     "@nextcloud/axios": "^2.6.0",
-    "@nextcloud/files": "^3.12.2",
+    "@nextcloud/files": "^3.13.0",
     "@nextcloud/l10n": "^3.4.1",
     "@nextcloud/router": "^3.2.0"
   },
