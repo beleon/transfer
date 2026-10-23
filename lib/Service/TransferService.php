@@ -148,7 +148,7 @@ class TransferService {
 			if ($cache) $this->removeTransfer($cache, $userId, $transferId);
 			@unlink($tmpPath);
 			if ($cancelled) {
-				$this->generateFailedEvent($userId, $path, $displayUrl);
+				$this->generateCancelledEvent($userId, $path, $displayUrl);
 				return ['result' => self::RESULT_CANCELLED];
 			}
 			if ($exception instanceof LocalServerException) {
@@ -261,6 +261,16 @@ class TransferService {
 		$event->setType(TransferFailedProvider::TYPE_TRANSFER_FAILED);
 		$event->setAffectedUser($userId);
 		$event->setSubject(TransferFailedProvider::SUBJECT_TRANSFER_FAILED, ["url" => $url]);
+		$this->activityManager->publish($event);
+	}
+
+	protected function generateCancelledEvent(string $userId, string $path, string $url) {
+		$url = self::stripCredentials($url);
+		$event = $this->activityManager->generateEvent();
+		$event->setApp("transfer");
+		$event->setType(TransferFailedProvider::TYPE_TRANSFER_FAILED);
+		$event->setAffectedUser($userId);
+		$event->setSubject(TransferFailedProvider::SUBJECT_TRANSFER_CANCELLED, ["url" => $url]);
 		$this->activityManager->publish($event);
 	}
 
