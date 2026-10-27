@@ -3,6 +3,7 @@ OC.L10N.register(
     {
     "Files" : "Fajlovi",
     "Link" : "Veza",
+    "File name" : "Ime fajla",
     "Cancel" : "Poništi",
     "Upload" : "Otpremi"
 },

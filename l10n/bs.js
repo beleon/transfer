@@ -2,6 +2,7 @@ OC.L10N.register(
     "transfer",
     {
     "Link" : "Veza",
+    "File name" : "Naziv datoteke",
     "Cancel" : "Cancel",
     "Upload" : "Učitaj"
 },

@@ -3,6 +3,7 @@ OC.L10N.register(
     {
     "Files" : "Skedarë",
     "Link" : "Lidhje",
+    "File name" : "Emri i skedarit",
     "Cancel" : "Cancel",
     "Upload" : "Ngarkoni"
 },

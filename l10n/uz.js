@@ -3,6 +3,7 @@ OC.L10N.register(
     {
     "Files" : "Fayllar",
     "Link" : "Havola",
+    "File name" : "Fayl nomi",
     "Checksum" : "Tekshirish summasi",
     "Cancel" : "Bekor qilish",
     "Upload" : "Yuklash"
